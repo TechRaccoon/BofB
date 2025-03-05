@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     //[SerializeField] NavMeshAgent agent;
     [SerializeField] CharacterController charCtrl;
-    //[SerializeField] PlayerAnim anim;
+    [SerializeField] PlayerAnim anim;
 
     //SFX
     //[SerializeField] AudioSource playerAudio;
@@ -17,11 +17,6 @@ public class PlayerMovement : MonoBehaviour
 
 
     //private PlayerState state;
-
-    //player variables
-    
-
-    private int bulletDamage = 4;
 
     //singular enemy clicked by player
     public Vector2 targetDirection;
@@ -56,47 +51,16 @@ public class PlayerMovement : MonoBehaviour
         charCtrl.Move(transform.TransformDirection(movement));
 
         //Animation directions call
-        //direction = new Vector2(horizInput, vertInput).normalized;
+        direction = new Vector2(horizInput, vertInput).normalized;
 
         // check if player is moving
-        //Vector2 inputVector = new Vector2(horizInput, vertInput);
-        //bool isMoving = inputVector.magnitude > 0.1f;
+        Vector2 inputVector = new Vector2(horizInput, vertInput);
+        bool isMoving = inputVector.magnitude > 0.1f;
 
-
-        //if (state.GetPlayerState() == PlayerStates.PLAYER_DEAD)
-        //{
-        //    anim.SetDirection(direction);
-        //    GetComponent<PlayerMovement>().enabled = false;
-
-        //}
-        //else if (isDamage)
-        //{
-        //    if (!isCoroutineRunning)
-        //    {
-        //        StartCoroutine(DamageCoroutine(direction));
-        //    }
-        //}
-        //else if (isMoving) // player is moving!
-        //{
-        //    Messenger.Broadcast("PLAYER_MOVING");
-        //    anim.SetDirection(direction);
-        //}
-        //else
-        //{
-        //    if (targetObject != null && state.GetPlayerState() == PlayerStates.PLAYER_ATTACK) // Player is attacking ATTACK!!
-        //    {   //rotate player towards enemy 
-        //        anim.SetDirection(targetDirection); //target directon passed 
-        //        if (!isCoroutineRunning) // check if coroutine is running NOT animation
-        //        {
-        //            StartCoroutine(DoubleAction());
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Messenger.Broadcast("PLAYER_IDLE"); //player is NOT attacking, idle
-        //        anim.SetDirection(direction);
-        //    }
-        //}
+        
+        anim.SetDirection(direction, isMoving);
+        
+        
     }
 
     //IEnumerator DoubleAction() //single animation 2 shots , damage dealt to enemy

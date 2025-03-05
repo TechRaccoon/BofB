@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     public Transform target;
 
     //Offset from the Player
-    private Vector3 offset = new Vector3(0f, 2f, -8f);
+    private Vector3 offset = new Vector3(0f, 4f, -8f);
 
     // Update is called once per frame
     void LateUpdate()
