@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
     //private PlayerState state;
 
     //singular enemy clicked by player
-    public Vector2 targetDirection;
-    private GameObject targetObject;
+    //public Vector2 targetDirection;
+    //private GameObject targetObject;
 
     //movement variables
     private float horizInput;
@@ -32,17 +33,26 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 direction;
 
     //coroutine running to avoid multiple calls
-    private bool isDamage = false;
-    private bool isCoroutineRunning = false;
+    //private bool isDamage = false;
+    //private bool isCoroutineRunning = false;
 
-  
+    private void OnEnable()
+    {
+        // Subscribe to dialogue events
+        //DialogueManager.Instance.OnDialogueStarted += DisableMovement;
+        //DialogueManager.Instance.OnDialogueEnded += EnableMovement;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe to prevent memory leaks
+        //DialogueManager.Instance.OnDialogueStarted -= DisableMovement;
+        //DialogueManager.Instance.OnDialogueEnded -= EnableMovement;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        //DEBUG STATEMENT
-        //Debug.Log("PLAYER STATE: " + state.GetPlayerState());
-
 
         //movement handle
         horizInput = Input.GetAxis("Horizontal");
@@ -57,10 +67,17 @@ public class PlayerMovement : MonoBehaviour
         Vector2 inputVector = new Vector2(horizInput, vertInput);
         bool isMoving = inputVector.magnitude > 0.1f;
 
-        
+        //call to set the right animation sprite
         anim.SetDirection(direction, isMoving);
-        
-        
+       
+    }
+
+    public void DisableMovement(object sender, EventArgs e) {
+        this.charCtrl.enabled = false;
+    }
+
+    public void EnableMovement(object sender, EventArgs e) {
+        this.charCtrl.enabled = true;
     }
 
     //IEnumerator DoubleAction() //single animation 2 shots , damage dealt to enemy
