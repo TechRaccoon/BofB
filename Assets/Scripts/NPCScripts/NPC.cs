@@ -5,33 +5,52 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     public Dialogue dialog;
-    private bool OnDialogue = false; 
-    
+    private bool OnDialogue = false;
+    private Coroutine inputCoroutine;
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && inputCoroutine == null) {
+            inputCoroutine = StartCoroutine(CheckForInput());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && inputCoroutine != null)
+        {
+            StopCoroutine(CheckForInput());
+        }
+    }
 
     public void TriggerDialogue()
     {
         FindAnyObjectByType<DialogueManager>().StartDialogue(dialog);
-
     }
-    private void OnTriggerStay(Collider other)
+
+    public void NextDialogue()
     {
-        //Debug.Log("running");
-        //Check if the player is in interaction distance
-        if (other.tag == "Player")
-        {
-            Debug.Log("ON THE INTERACT ZONE");
-            //show UI interaction icon 
+        FindAnyObjectByType<DialogueManager>().DisplayNexteSentence();
+    }
 
-            //interactDistance = true;
-            if (Input.GetKeyDown(KeyCode.Space) && !OnDialogue) {
-
-                Debug.Log(" !!!!!!!!!! starting dialogue");
-                TriggerDialogue();
-                OnDialogue = true;
-                
+    private IEnumerator CheckForInput() {
+        while (true) {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (!OnDialogue)
+                {
+                    TriggerDialogue();
+                    OnDialogue = true;
+                }
+                else
+                {
+                    NextDialogue();
+                }
             }
-             
+            yield return null;
         }
+
     }
 
     //public void Interact() {

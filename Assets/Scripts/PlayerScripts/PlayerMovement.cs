@@ -80,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
         this.charCtrl.enabled = true;
     }
 
+
     //IEnumerator DoubleAction() //single animation 2 shots , damage dealt to enemy
     //{
     //    if (targetObject != null)
