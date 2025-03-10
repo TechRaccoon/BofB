@@ -14,18 +14,35 @@ public class DialogueManager : MonoBehaviour
 
     private GameObject player;
 
+    private Canvas npcCanvas;
+
+    private bool isTyping = false;
+    private string currentSentence;
+
     private void Start()
     {
         sentences = new Queue<string>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    public void StartDialogue(Dialogue dialogue) {
+    public void StartDialogue(Dialogue dialogue, Canvas canvas) {
+
+        // Store reference to the NPC's canvas
+        npcCanvas = canvas;
+
+        //Enable canvas UI
+        if (npcCanvas != null)
+        {
+            Debug.Log("canvas is not null");
+            npcCanvas.enabled = true;
+        }
 
         //Print the name of the respective NPC
         nameText.text = dialogue.name;
 
         //Disable player movement while dialog is happening
+        player.GetComponentInChildren<PlayerAnim>().SetDirection(new Vector2(0, 0), false);
+
         player.GetComponent<PlayerMovement>().enabled = false;
 
         sentences.Clear();
@@ -35,37 +52,58 @@ public class DialogueManager : MonoBehaviour
             sentences.Enqueue(sentence);
         }
 
-        DisplayNexteSentence();
+        DisplayNextSentence();
     }
 
-    public void DisplayNexteSentence() {
+    public void DisplayNextSentence()
+    {
+        // If we're typing, complete the current sentence
+        if (isTyping)
+        {
+            StopAllCoroutines();
+            dialogueText.text = currentSentence;
+            isTyping = false;
+            return;
+        }
 
-        if (sentences.Count == 0) {
+        // If no more sentences, end dialogue
+        if (sentences.Count == 0)
+        {
             EndDialogue();
             return;
         }
 
-        string sentence = sentences.Dequeue();
-        StopCoroutine(TypeSentence(sentence));
-        StartCoroutine(TypeSentence(sentence));
+        // Get next sentence and start typing
+        currentSentence = sentences.Dequeue();
+        StartCoroutine(TypeSentence(currentSentence));
     }
 
     public void EndDialogue() {
         Debug.Log("End of dialogue");
 
-        //Make the UI dissapear
-
+        // Disable the canvas
+        if (npcCanvas != null)
+        {
+            npcCanvas.enabled = false;
+        }
         //Return movement to the player
         player.GetComponent<PlayerMovement>().enabled = true;
+
+        // Clear sentences *only when dialogue fully ends*
+        sentences.Clear();
     }
 
     IEnumerator TypeSentence(string sentence)
     {
+        isTyping = true;
         dialogueText.text = "";
+
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(0.025f);
+            yield return new WaitForSeconds(0.025f); // Typing speed
         }
+
+        isTyping = false; // Now it's okay to press Space to continue
     }
 }

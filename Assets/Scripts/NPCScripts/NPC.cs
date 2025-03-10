@@ -5,9 +5,17 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     public Dialogue dialog;
-    private bool OnDialogue = false;
+    public bool onDialogue = false;
     private Coroutine inputCoroutine;
+    private Canvas npcCanvas;
 
+    private void Start()
+    {
+        // Get the canvas component from children (including inactive)
+        npcCanvas = gameObject.GetComponentInChildren<Canvas>();
+        Debug.Log("the value of canvas is" + npcCanvas);
+        if (npcCanvas != null) npcCanvas.enabled = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,32 +28,37 @@ public class NPC : MonoBehaviour
     {
         if (other.CompareTag("Player") && inputCoroutine != null)
         {
-            StopCoroutine(CheckForInput());
+            StopCoroutine(inputCoroutine);
+            inputCoroutine = null;
         }
     }
 
     public void TriggerDialogue()
     {
-        FindAnyObjectByType<DialogueManager>().StartDialogue(dialog);
+        FindAnyObjectByType<DialogueManager>().StartDialogue(dialog , npcCanvas);
     }
 
     public void NextDialogue()
     {
-        FindAnyObjectByType<DialogueManager>().DisplayNexteSentence();
+        FindAnyObjectByType<DialogueManager>().DisplayNextSentence();
     }
 
-    private IEnumerator CheckForInput() {
+    private IEnumerator CheckForInput()
+    {
         while (true) {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (!OnDialogue)
+                if (!onDialogue)
                 {
                     TriggerDialogue();
-                    OnDialogue = true;
+                    onDialogue = true;
                 }
                 else
                 {
                     NextDialogue();
+                    if (!npcCanvas.enabled) {
+                        onDialogue = false;
+                    }
                 }
             }
             yield return null;
@@ -53,11 +66,4 @@ public class NPC : MonoBehaviour
 
     }
 
-    //public void Interact() {
-    //    //DialogueManager.Instance.StartDialogue();
-    //}
-
-    //public void EndInteraction() {
-    //    //DialogueManager.Instance.EndDialogue();
-    //}
 }
