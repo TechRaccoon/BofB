@@ -13,8 +13,8 @@ public class NPC : MonoBehaviour
     {
         // Get the canvas component from children (including inactive)
         npcCanvas = gameObject.GetComponentInChildren<Canvas>();
-        Debug.Log("the value of canvas is" + npcCanvas);
         if (npcCanvas != null) npcCanvas.enabled = false;
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,6 +35,9 @@ public class NPC : MonoBehaviour
 
     public void TriggerDialogue()
     {
+        //Register the NPC on the manager
+        FindAnyObjectByType<DialogueManager>().AssignNPC(this);
+        //trigger the dialogue
         FindAnyObjectByType<DialogueManager>().StartDialogue(dialog , npcCanvas);
     }
 

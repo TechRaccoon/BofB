@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using System.Linq;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
@@ -36,13 +37,13 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("canvas is not null");
             npcCanvas.enabled = true;
         }
+         
 
-        //Print the name of the respective NPC
+        //Print the name to the canvas of the respective NPC
         nameText.text = dialogue.name;
 
         //Disable player movement while dialog is happening
         player.GetComponentInChildren<PlayerAnim>().SetDirection(new Vector2(0, 0), false);
-
         player.GetComponent<PlayerMovement>().enabled = false;
 
         sentences.Clear();
@@ -105,5 +106,11 @@ public class DialogueManager : MonoBehaviour
         }
 
         isTyping = false; // Now it's okay to press Space to continue
+    }
+
+    public void AssignNPC(NPC npc)
+    {
+        nameText = npc.GetComponentsInChildren<TMP_Text>(true).FirstOrDefault(t => t.gameObject.name == "Name");
+        dialogueText = npc.GetComponentsInChildren<TMP_Text>(true).FirstOrDefault(t => t.gameObject.name == "Dialogue");
     }
 }
