@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,11 @@ public class BattleManager : MonoBehaviour
 
     // Contains all actors in battle
     public List<BattleActor> AllActors = new List<BattleActor>();
+
+    internal void SelectMove(MoveBase move)
+    {
+        throw new NotImplementedException();
+    }
 
     void Wake()
     {

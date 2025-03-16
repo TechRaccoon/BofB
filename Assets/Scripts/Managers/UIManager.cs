@@ -1,66 +1,163 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
     [Header("UI References")]
-    public GameObject actionMenuPanel;    // Parent panel for the action menu
-    public GameObject targetPanel;        // Panel for selecting targets
-    public Text actionCommandText;        // Displays "Press SPACE NOW!"
+    public GameObject actionMenuPanel;    // Action selection menu
+    public GameObject targetPanel;        // Target selection panel
     public RectTransform moveButtonsParent; // Container for move buttons
+    public Transform commandUIContainer;  // Parent for action command UI
 
     [Header("Prefabs")]
-    public GameObject moveButtonPrefab;   // Prefab for move selection buttons
+    public GameObject moveButtonPrefab;   // Move selection button prefab
+    public GameObject defaultCommandPrompt; // Default "Press SPACE" prompt
+
+    [Header("Navigation")]
+    public Color selectedColor = Color.yellow;
+    public Color normalColor = Color.white;
+    public float navCooldown = 0.2f;
+
+    private List<Button> actionButtons = new List<Button>();
+    private int selectedIndex = 0;
+    private float lastNavTime;
+    private GameObject currentCommandUI;  // Currently active command UI
 
     void Awake()
     {
         if (Instance == null) Instance = this;
     }
 
-    // Show/hide the action menu (e.g., Attack/Item/Badge)
-    public void ShowActionMenu(List<MoveBase> moves)
+    void Update()
     {
-        actionMenuPanel.SetActive(true);
-        ClearMoveButtons();
-
-        // Populate the menu with buttons for each move
-        foreach (MoveBase move in moves)
+        if (actionMenuPanel.activeSelf)
         {
-            GameObject buttonObj = Instantiate(moveButtonPrefab, moveButtonsParent);
-            //MoveButton moveButton = buttonObj.GetComponent<MoveButton>();
-            //moveButton.Initialize(move);
+            HandleMenuNavigation();
+        }
+
+        if (currentCommandUI != null)
+        {
+            HandleActionCommandInput();
         }
     }
 
-    public void HideActionMenu()
+    // Show action menu with player's available moves
+    public void ShowActionMenu(List<MoveBase> moves)
     {
-        actionMenuPanel.SetActive(false);
+        actionMenuPanel.SetActive(true);
+        selectedIndex = 0;
+        ClearMoveButtons();
+        actionButtons.Clear();
+
+        foreach (MoveBase move in moves)
+        {
+            GameObject buttonObj = Instantiate(moveButtonPrefab, moveButtonsParent);
+            MoveButton moveButton = buttonObj.GetComponent<MoveButton>();
+            moveButton.Initialize(move);
+            actionButtons.Add(buttonObj.GetComponent<Button>());
+        }
+
+        UpdateButtonColors();
     }
 
-    // Show/hide target selection UI
-    public void ShowTargetPanel()
+    void HandleMenuNavigation()
     {
-        targetPanel.SetActive(true);
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        if (Time.time - lastNavTime > navCooldown && Mathf.Abs(vertical) > 0.5f)
+        {
+            selectedIndex = Mathf.Clamp(
+                selectedIndex + (vertical > 0 ? -1 : 1),
+                0,
+                actionButtons.Count - 1
+            );
+            UpdateButtonColors();
+            lastNavTime = Time.time;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        {
+            actionButtons[selectedIndex].onClick.Invoke();
+        }
     }
 
-    public void HideTargetPanel()
+    void UpdateButtonColors()
     {
-        targetPanel.SetActive(false);
+        for (int i = 0; i < actionButtons.Count; i++)
+        {
+            actionButtons[i].image.color = i == selectedIndex ? selectedColor : normalColor;
+        }
     }
 
-    // Action command UI
-    public void ShowActionCommandPrompt()
+
+    public void HideActionMenu() => actionMenuPanel.SetActive(false);
+
+    // Show target selection UI
+    public void ShowTargetPanel() => targetPanel.SetActive(true);
+    public void HideTargetPanel() => targetPanel.SetActive(false);
+
+    // Show specific action command UI
+    public void ShowActionCommand(ActionCommandBase command)
     {
-        actionCommandText.gameObject.SetActive(true);
-        actionCommandText.text = "Press SPACE NOW!";
+        ClearCurrentCommandUI();
+        StartCoroutine(ActionCommandRoutine(command));
     }
 
-    public void HideActionCommandPrompt()
+    IEnumerator ActionCommandRoutine(ActionCommandBase command)
     {
-        actionCommandText.gameObject.SetActive(false);
+        // Show UI
+        if (command.UIPrefab != null)
+        {
+            currentCommandUI = Instantiate(command.UIPrefab, commandUIContainer);
+        }
+        else
+        {
+            currentCommandUI = Instantiate(defaultCommandPrompt, commandUIContainer);
+            Text promptText = currentCommandUI.GetComponentInChildren<Text>();
+            if (promptText != null) promptText.text = command.DefaultPrompt;
+        }
+
+        // Wait for input or timeout
+        float timer = 0;
+        bool success = false;
+
+        while (timer < command.Duration)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                success = true;
+                break;
+            }
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Notify battle system
+        if (success)
+        {
+            BattleManager.Instance.OnActionCommandSuccess();
+        }
+        else
+        {
+            BattleManager.Instance.OnActionCommandFail();
+        }
+
+        ClearCurrentCommandUI();
+    }
+
+    void HandleActionCommandInput()
+    {
+        // Additional input handling can be added here
+        // if using more complex command types
+    }
+
+    public void HideActionCommand()
+    {
+        ClearCurrentCommandUI();
     }
 
     // Clear existing move buttons
@@ -70,5 +167,20 @@ public class UIManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    private void ClearCurrentCommandUI()
+    {
+        if (currentCommandUI != null)
+        {
+            Destroy(currentCommandUI);
+            currentCommandUI = null;
+        }
+    }
+
+    // Get current command UI component
+    public T GetCommandUI<T>() where T : MonoBehaviour
+    {
+        return currentCommandUI?.GetComponent<T>();
     }
 }
