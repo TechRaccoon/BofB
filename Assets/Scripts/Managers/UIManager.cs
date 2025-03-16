@@ -110,22 +110,22 @@ public class UIManager : MonoBehaviour
     IEnumerator ActionCommandRoutine(ActionCommandBase command)
     {
         // Show UI
-        if (command.UIPrefab != null)
+        if (command.uiPrefab != null)
         {
-            currentCommandUI = Instantiate(command.UIPrefab, commandUIContainer);
+            currentCommandUI = Instantiate(command.uiPrefab, commandUIContainer);
         }
         else
         {
             currentCommandUI = Instantiate(defaultCommandPrompt, commandUIContainer);
             Text promptText = currentCommandUI.GetComponentInChildren<Text>();
-            if (promptText != null) promptText.text = command.DefaultPrompt;
+            if (promptText != null) promptText.text = command.defaultPrompt;
         }
 
         // Wait for input or timeout
         float timer = 0;
         bool success = false;
 
-        while (timer < command.Duration)
+        while (timer < command.duration)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {

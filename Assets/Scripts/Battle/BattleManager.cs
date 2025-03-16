@@ -47,4 +47,14 @@ public class BattleManager : MonoBehaviour
     {
 
     }
+
+    internal void OnActionCommandSuccess()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void OnActionCommandFail()
+    {
+        throw new NotImplementedException();
+    }
 }
