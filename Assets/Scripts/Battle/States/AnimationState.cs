@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AnimationState : BattleState
 {
+    //oh this is gonna be hell 
     public override void Enter()
     {
         throw new System.NotImplementedException();

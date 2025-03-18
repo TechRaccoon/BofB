@@ -19,7 +19,7 @@ public class ActionCommandState : BattleState
     public override void Enter()
     {
         // Show UI prompt (e.g., "Press SPACE NOW!")
-        UIManager.Instance.ShowActionCommand(ActionCommandBase command);
+        UIManager.Instance.ShowActionCommand(_move.actionCommand);
 
         // Start listening for input
         _inputRoutine = BattleManager.Instance.StartCoroutine(WaitForInput());

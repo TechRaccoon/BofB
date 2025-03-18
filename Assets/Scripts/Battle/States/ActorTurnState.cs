@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActorTurnState : BattleState
 {
     private BattleActor _actor; // The actor whose turn it is (player/enemy).
+    private bool _hasInitialized = false; //to check when re entering state
 
     public ActorTurnState(BattleActor actor)
     {
@@ -13,23 +14,25 @@ public class ActorTurnState : BattleState
 
     public override void Enter()
     {
-        // Decide whether to show the player menu or run enemy AI.
-        if (_actor.CompareTag("Player"))
+        if (!_hasInitialized)
         {
-            BattleManager.Instance.StateStack.PushState(
-                new PlayerActionState(_actor)
-            );
+            // Push child state (PlayerActionState/EnemyActionState)
+            if (_actor.CompareTag("Player"))
+                BattleManager.Instance.StateStack.PushState(new PlayerActionState(_actor));
+            else
+                BattleManager.Instance.StateStack.PushState(new EnemyActionState(_actor));
+
+            _hasInitialized = true;
         }
-        else
-        {
-            BattleManager.Instance.StateStack.PushState(
-                new EnemyActionState(_actor)
-            );
+        else {
+            BattleManager.Instance.StateStack.PopState();
         }
     }
 
+
     public override void Exit()
     {
-        // No cleanup needed here.
+        // Reset for reuse
+        _hasInitialized = false;
     }
 }

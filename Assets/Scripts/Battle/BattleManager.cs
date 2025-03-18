@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    //Singleton declartion
+    // Singleton declartion
     public static BattleManager Instance { get; private set; }
 
     // Stores the stack of the battle states (turns) 
@@ -19,9 +19,16 @@ public class BattleManager : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    void Wake()
+    // Upon Intanciation checks is theres no other Battlemanger Insance
+    // Instanciates a new stack of states 
+    void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        Instance = this;
         StateStack = new BattleStack();
     }
 
@@ -32,20 +39,16 @@ public class BattleManager : MonoBehaviour
         // Find all BattleActors in the scene (players + enemies)
         AllActors.AddRange(FindObjectsOfType<BattleActor>());
 
-        //Shuffle the turn order
-        //StateStack.PushState(new TurnStartState());
+        // Starts the first element on the stack
+        StateStack.PushState(new TurnStartState());
 
     }
 
-    // Update is called once per frame
+    // Propagate Update() to the top state
     void Update()
     {
+        
         StateStack.Update();
-    }
-
-    private void Shuffle()
-    {
-
     }
 
     internal void OnActionCommandSuccess()

@@ -7,7 +7,7 @@ public class BattleStack : MonoBehaviour
     // Stores the stack of active states
     private Stack<BattleState> stack = new Stack<BattleState>();
 
-    // Adds a new state to the top of the stack.
+    // Adds a new state to the top of the stack and runs it.
     public void PushState(BattleState state) {
         // Pause the current state (if any) by calling Exit().
         if (stack.Count > 0) stack.Peek().Exit();
@@ -38,7 +38,9 @@ public class BattleStack : MonoBehaviour
     public void Update()
     {
         if (stack.Count > 0) {
+
             // Delegate Update() to the active state.
-            stack.Peek().Exit(); }
+            stack.Peek().Update();
+        }
     }
 }

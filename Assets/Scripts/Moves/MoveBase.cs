@@ -11,6 +11,7 @@ public abstract class MoveBase : ScriptableObject
     public Sprite Icon;
     public enum TargetType { SingleEnemy, AllEnemies, Self }
     public TargetType targetType;
+    public ActionCommandBase actionCommand;
 
     // Called when the move is selected and executed
     public abstract void Execute(BattleActor user, BattleActor target);
