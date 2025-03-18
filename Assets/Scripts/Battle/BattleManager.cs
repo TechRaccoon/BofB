@@ -14,6 +14,8 @@ public class BattleManager : MonoBehaviour
     // Contains all actors in battle
     public List<BattleActor> AllActors = new List<BattleActor>();
 
+    //variable to hold the transform of the battle positions
+
     internal void SelectMove(MoveBase move)
     {
         throw new NotImplementedException();
@@ -39,6 +41,9 @@ public class BattleManager : MonoBehaviour
         // Find all BattleActors in the scene (players + enemies)
         AllActors.AddRange(FindObjectsOfType<BattleActor>());
 
+        //place actors in the scene
+        SetActors();
+
         // Starts the first element on the stack
         StateStack.PushState(new TurnStartState());
 
@@ -59,5 +64,10 @@ public class BattleManager : MonoBehaviour
     internal void OnActionCommandFail()
     {
         throw new NotImplementedException();
+    }
+
+    //instanciate the actors objects (player + enemies) in the right place
+    void SetActors() {
+        //to be implemented
     }
 }

@@ -9,8 +9,14 @@ public class TurnStartState : BattleState
     private List<BattleActor> _turnOrder;
     private int _currentActorIndex;
 
+    //variable to hold the transforms of the parties positions
+
+
+
     public override void Enter()
     {
+        //instanciate the actors objects (player + enemies) in the right place
+
         //Shuffle the turn order on AllActors List
         _turnOrder = BattleManager.Instance.AllActors.OrderBy(i => Guid.NewGuid()).ToList();
 
@@ -47,7 +53,7 @@ public class TurnStartState : BattleState
         else
         {
             // All actors have acted - check win/lose condition
-            BattleManager.Instance.StateStack.PushState(new CheckWinState());
+            //BattleManager.Instance.StateStack.PushState(new CheckWinState());
 
             // Pop this state from the stack
             BattleManager.Instance.StateStack.PopState();
