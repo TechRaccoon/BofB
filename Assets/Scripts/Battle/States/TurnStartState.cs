@@ -9,9 +9,6 @@ public class TurnStartState : BattleState
     private List<BattleActor> _turnOrder;
     private int _currentActorIndex;
 
-    //variable to hold the transforms of the parties positions
-
-
 
     public override void Enter()
     {

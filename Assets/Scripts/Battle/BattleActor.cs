@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class BattleActor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //Unit name
+    public string UnitName;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //Health
+    public int maxHealth;
+    public int currentHealth;
+
+    //Mana
+    public int maxVP;
+    public int currentVP;
+
+    // Character Move list 
+    public List<MoveBase> AvailableMoves;
+
 }

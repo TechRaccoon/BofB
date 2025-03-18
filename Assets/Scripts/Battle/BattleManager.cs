@@ -22,7 +22,7 @@ public class BattleManager : MonoBehaviour
     }
 
     // Upon Intanciation checks is theres no other Battlemanger Insance
-    // Instanciates a new stack of states 
+    // Instanciates a new Stack of BattleStates 
     void Awake()
     {
         if (Instance != null && Instance != this)

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class UIManager : MonoBehaviour
     public GameObject targetPanel;        // Target selection panel
     public RectTransform moveButtonsParent; // Container for move buttons
     public Transform commandUIContainer;  // Parent for action command UI
+
+    
 
     [Header("Prefabs")]
     public GameObject moveButtonPrefab;   // Move selection button prefab
@@ -27,6 +30,23 @@ public class UIManager : MonoBehaviour
     private float lastNavTime;
     private GameObject currentCommandUI;  // Currently active command UI
 
+
+    internal void SelectFirstMoveButton()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void SelectNextMove()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal MoveBase GetSelectedMove()
+    {
+        throw new NotImplementedException();
+    }
+
+    
     void Awake()
     {
         if (Instance == null) Instance = this;
