@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
     public RectTransform moveButtonsParent; // Container for move buttons
     public Transform commandUIContainer;  // Parent for action command UI
 
-    
 
     [Header("Prefabs")]
     public GameObject moveButtonPrefab;   // Move selection button prefab

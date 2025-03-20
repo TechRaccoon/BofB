@@ -15,11 +15,11 @@ public class BattleManager : MonoBehaviour
     public List<BattleActor> AllActors = new List<BattleActor>();
 
     //variable to hold the transform of the battle positions
+    public Vector3[] playerSide = { new Vector3 { x = (float)-1.84, y = 0, z = 0 } };
+    public Vector3[] enemySide = { new Vector3{ x = (float)1.96, y = 0, z = 0 } };
 
-    internal void SelectMove(MoveBase move)
-    {
-        throw new NotImplementedException();
-    }
+    public Transform playerSide1;
+    public Transform enemySide1;
 
     // Upon Intanciation checks is theres no other Battlemanger Insance
     // Instanciates a new Stack of BattleStates 
@@ -56,6 +56,11 @@ public class BattleManager : MonoBehaviour
         StateStack.Update();
     }
 
+    internal void SelectMove(MoveBase move)
+    {
+        throw new NotImplementedException();
+    }
+
     internal void OnActionCommandSuccess()
     {
         throw new NotImplementedException();
@@ -69,5 +74,8 @@ public class BattleManager : MonoBehaviour
     //instanciate the actors objects (player + enemies) in the right place
     void SetActors() {
         //to be implemented
+        Instantiate(AllActors[0],playerSide1);
+
+        Instantiate(AllActors[1], enemySide1);
     }
 }
