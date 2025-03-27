@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 282316637904440754}
   - component: {fileID: 4207465259222500197}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: NPC Dialogue
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
