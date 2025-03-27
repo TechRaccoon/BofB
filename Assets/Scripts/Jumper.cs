@@ -9,7 +9,7 @@ public class Jumper : MonoBehaviour
     // Conection to the adjacent area 
     [SerializeField] public Vector3 spawnPoint;
 
-    //Unity Event to trigger fade out camera effect 
+    //Static Event to trigger fade out camera effect 
     public static event System.Action OnPlayerTransition;
 
     private void OnTriggerEnter(Collider other)
