@@ -10,7 +10,7 @@ public enum EnemyState { IDLE, PATROL, CHASE, ATTACK, DAMAGE, DEAD };
 public class EnemyAI : MonoBehaviour
 {
 
-    //[SerializeField] EnemyAnim anim;
+    public EnemyAnim anim;
     [SerializeField] private UnityEngine.AI.NavMeshAgent agent;
 
     //Enemy Variables
@@ -48,9 +48,20 @@ public class EnemyAI : MonoBehaviour
 
     //coroutine checker
     private bool isCoroutineRunning = false;
+
     private void Start()
     {
         state = EnemyState.IDLE;
+        try
+        {
+            anim = GetComponentInChildren<EnemyAnim>();
+            Debug.Log("anim is:" + anim.enabled);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+        
     }
 
     void Update()
@@ -81,7 +92,7 @@ public class EnemyAI : MonoBehaviour
     void Update_Idle()
     {
         agent.isStopped = true;                 // stop the agent
-        //anim.SetDirection(direction);           // change animations                             
+        anim.SetDirection(direction);           // change animations                             
         if (distanceToTarget <= chaseRange)
         {
             SetState(EnemyState.CHASE);
@@ -91,7 +102,7 @@ public class EnemyAI : MonoBehaviour
     void Update_Chase()
     {
         agent.isStopped = false;
-        //anim.SetDirection(direction);
+        anim.SetDirection(direction);
         agent.SetDestination(target.transform.position);  // follow the target
         if (!isCoroutineRunning)
         {
@@ -131,7 +142,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!isCoroutineRunning)
         {
-            //anim.SetDirection(direction);    //update the animation
+            anim.SetDirection(direction);    //update the animation
             StartCoroutine(TakingDamage());
         }
     }
@@ -228,8 +239,8 @@ public class EnemyAI : MonoBehaviour
 
     public void RegisterAsTarget(Vector2 enemy)
     {
-        //player.targetDirection = enemy;
-        //player.SetTarget(this.gameObject);
+        player.targetDirection = enemy;
+        player.SetTarget(this.gameObject);
 
     }
     private void OnDrawGizmos()

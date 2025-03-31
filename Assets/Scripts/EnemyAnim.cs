@@ -11,12 +11,13 @@ public class EnemyAnim : MonoBehaviour
     [SerializeField] EnemyAI state;
     [SerializeField] bool hasDamageAnim = false;
 
+    //Clarification* items in array are repeated because the enemy only has 4 direction and not 8 like the player
     public string[] idleDirection = { "IDLE_NW", "IDLE_NW", "IDLE_SW", "IDLE_SW", "IDLE_SE", "IDLE_SE", "IDLE_NE", "IDLE_NE" };
     public string[] runDirection = { "RUNNING_NW", "RUNNING_NW", "RUNNING_SW", "RUNNING_SW", "RUNNING_SE", "RUNNING_SE", "RUNNING_NE", "RUNNING_NW" };
-    public string[] attackDirection = { "ATTACK_NW", "ATTACK_NW", "ATTACK_SW", "ATTACK_SW", "ATTACK_SE", "ATTACK_SE", "ATTACK_NE", "ATTACK_NE" };
-    public string[] damageDirection = { "DAMAGE_NW", "DAMAGE_NW", "DAMAGE_SW", "DAMAGE_SW", "DAMAGE_SE", "DAMAGE_SE", "DAMAGE_NE", "DAMAGE_NE" };
-    public string[] deathDirection = { "DEATH_NW", "DEATH_NW", "DEATH_SW", "DEATH_SW", "DEATH_SE", "DEATH_SE", "DEATH_NE", "DEATH_NE" };
-    public string[] deathDirections = { "DEATH_NW", "DEATH_NW", "DEATH_SW", "DEATH_SW", "DEATH_SE", "DEATH_SE", "DEATH_NE", "DEATH_NE" };
+    //public string[] attackDirection = { "ATTACK_NW", "ATTACK_NW", "ATTACK_SW", "ATTACK_SW", "ATTACK_SE", "ATTACK_SE", "ATTACK_NE", "ATTACK_NE" };
+    //public string[] damageDirection = { "DAMAGE_NW", "DAMAGE_NW", "DAMAGE_SW", "DAMAGE_SW", "DAMAGE_SE", "DAMAGE_SE", "DAMAGE_NE", "DAMAGE_NE" };
+    //public string[] deathDirection = { "DEATH_NW", "DEATH_NW", "DEATH_SW", "DEATH_SW", "DEATH_SE", "DEATH_SE", "DEATH_NE", "DEATH_NE" };
+    //public string[] deathDirections = { "DEATH_NW", "DEATH_NW", "DEATH_SW", "DEATH_SW", "DEATH_SE", "DEATH_SE", "DEATH_NE", "DEATH_NE" };
 
     private int lastDirection;
 
@@ -28,7 +29,7 @@ public class EnemyAnim : MonoBehaviour
         switch (state.GetEnemyState())
         {
             case EnemyState.ATTACK:
-                directionArray = attackDirection;
+                //directionArray = attackDirection;
                 lastDirection = DirectionToIndex(newDirection);
                 break;
             case EnemyState.CHASE:
@@ -38,18 +39,18 @@ public class EnemyAnim : MonoBehaviour
                 break;
             case EnemyState.IDLE:
                 directionArray = idleDirection;
-                //lastDirection = DirectionToIndex(newDirection);
+                lastDirection = DirectionToIndex(newDirection);
                 break;
             case EnemyState.DAMAGE:
                 if (hasDamageAnim)
                 {
-                    directionArray = damageDirection;
+                    //directionArray = damageDirection;
                     lastDirection = DirectionToIndex(newDirection);
                 }
                 else { directionArray = idleDirection; }
                 break;
             case EnemyState.DEAD:
-                directionArray = deathDirections;
+                //directionArray = deathDirections;
                 lastDirection = DirectionToIndex(newDirection);
                 break;
             default: break;

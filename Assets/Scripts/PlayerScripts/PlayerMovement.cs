@@ -20,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
     //private PlayerState state;
 
     //singular enemy clicked by player
-    //public Vector2 targetDirection;
-    //private GameObject targetObject;
+    public Vector2 targetDirection;
+    private GameObject targetObject;
 
     //movement variables
     private float horizInput;
@@ -134,14 +134,14 @@ public class PlayerMovement : MonoBehaviour
     //    isDamage = false;
     //}
 
-    //public void ClearTarget()
-    //{
-    //    Debug.Log("clearing target");
-    //    this.targetObject = null;
-    //}
-    //public void SetTarget(GameObject obj)
-    //{
-    //    Debug.Log("SetTarget(): " + obj.gameObject.tag);
-    //    this.targetObject = obj;
-    //}
+    public void ClearTarget()
+    {
+        Debug.Log("clearing target");
+       this.targetObject = null;
+    }
+    public void SetTarget(GameObject obj)
+    {
+        Debug.Log("SetTarget(): " + obj.gameObject.tag);
+        this.targetObject = obj;
+    }
 }
