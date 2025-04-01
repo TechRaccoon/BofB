@@ -31,11 +31,11 @@ public class Jumper : MonoBehaviour
         // Disable player movement 
         other.GetComponent<PlayerMovement>().enabled = false;
 
-        //Change Player Position to new area
+        // Change Player Position to new area
         other.transform.position = spawnPoint;
         yield return new WaitForSeconds(0.3f);
 
-        // Disable player movement 
+        // Enable player movement 
         other.GetComponent<PlayerMovement>().enabled = true;
 
         // Trigger fade in once in the new area

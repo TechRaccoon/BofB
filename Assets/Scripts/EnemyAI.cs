@@ -17,6 +17,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] PlayerMovement player;
     [SerializeField] Transform target;
 
+    // Battle event
+    public static event System.Action OnBattleTransition;
+    private bool _combatTriggered = false;
+
     //SFX
     //[SerializeField] AudioSource enemySound;
     //[SerializeField] AudioClip attackSound;
@@ -48,8 +52,8 @@ public class EnemyAI : MonoBehaviour
 
         distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-        Vector2 directionToTarget = (target.position - transform.position).normalized;
-        direction = new Vector2(directionToTarget.x, directionToTarget.y);
+        Vector3 directionToTarget = (target.position - transform.position).normalized;
+        direction = new Vector2(directionToTarget.x, directionToTarget.z);
 
         //Debug.Log(direction);
         switch (state)
@@ -62,8 +66,8 @@ public class EnemyAI : MonoBehaviour
             //case EnemyState.DEAD: Update_Death(); break;
             default: break;
         }
-        Debug.Log($"Raw Direction: {(target.position - transform.position).normalized}");
-        Debug.Log($"2D Direction: {direction}");
+        //Debug.Log($"Raw Direction: {(target.position - transform.position).normalized}");
+        //Debug.Log($"2D Direction: {direction}");
     }
 
 
@@ -90,7 +94,19 @@ public class EnemyAI : MonoBehaviour
         {
             SetState(EnemyState.IDLE);
         }
+        else if (distanceToTarget <= attackRange && !_combatTriggered)
+        {
+            Update_BattleTrigger();
+            Debug.Log("COMBAT SCENE TRIGGERED!");
+            _combatTriggered = true;
+        }
+        
 
+    }
+
+    void Update_BattleTrigger()
+    {
+        OnBattleTransition?.Invoke();
     }
 
 

@@ -68,7 +68,7 @@ public class EnemyAnim : MonoBehaviour
         if (angle >= 315f || angle < 45f) return 0;   // SE (Right)
         if (angle >= 45f && angle < 135f) return 1;   // NE (Up)
         if (angle >= 135f && angle < 225f) return 2;  // NW (Left)
-        return 3;                                     // SW (Down)
+        else return 3;                                     // SW (Down)
     }
 
 
