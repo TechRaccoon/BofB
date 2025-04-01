@@ -9,14 +9,9 @@ public enum EnemyState { IDLE, PATROL, CHASE, ATTACK, DAMAGE, DEAD };
 
 public class EnemyAI : MonoBehaviour
 {
-
-    public EnemyAnim anim;
     [SerializeField] private UnityEngine.AI.NavMeshAgent agent;
-
-    //Enemy Variables
-    [SerializeField] public int health = 50;
-    [SerializeField] public float attackSpeed = 0.5f;  //frame dependant
-    [SerializeField] public int enemyDamage;
+    public EnemyAnim anim;
+    private EnemyState state;
 
     //Player variables
     [SerializeField] PlayerMovement player;
@@ -28,18 +23,6 @@ public class EnemyAI : MonoBehaviour
     //[SerializeField] AudioClip damageSound;
     //[SerializeField] AudioClip dieSound;
     //[SerializeField] AudioClip moveSound;
-
-    private EnemyState state;
-    public int Health
-    {
-        get => health;
-        set { health = value; UpdateHealth(); }
-    }
-
-    private void UpdateHealth()
-    {
-        throw new NotImplementedException();
-    }
 
     //Range variables 
     private float distanceToTarget = float.MaxValue;    // distance to target - default to far away
@@ -56,29 +39,17 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
+        anim = GetComponentInChildren<EnemyAnim>();
         state = EnemyState.IDLE;
-        try
-        {
-            anim = GetComponentInChildren<EnemyAnim>();
-            Debug.Log("anim is:" + anim.enabled);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-        }
-        
     }
 
     void Update()
     {
 
-        //Debug.Log("HEALTH: " + enemyController.Health + "STATE: " + state);
-
         distanceToTarget = Vector3.Distance(transform.position, target.position);
 
         Vector2 directionToTarget = (target.position - transform.position).normalized;
         direction = new Vector2(directionToTarget.x, directionToTarget.y);
-        //direction = new Vector2(agent.transform.forward.x, agent.transform.forward.z);
 
         //Debug.Log(direction);
         switch (state)
@@ -119,10 +90,7 @@ public class EnemyAI : MonoBehaviour
         {
             SetState(EnemyState.IDLE);
         }
-        else if (distanceToTarget <= attackRange)
-        {
-            SetState(EnemyState.ATTACK);
-        }
+
     }
 
 
