@@ -36,6 +36,11 @@ public class EnemyAI : MonoBehaviour
         set { health = value; UpdateHealth(); }
     }
 
+    private void UpdateHealth()
+    {
+        throw new NotImplementedException();
+    }
+
     //Range variables 
     private float distanceToTarget = float.MaxValue;    // distance to target - default to far away
     [SerializeField] float chaseRange = 3.5f;                     // when target is closer than this, chase!
@@ -71,8 +76,8 @@ public class EnemyAI : MonoBehaviour
 
         distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-        Vector3 directionToTarget = (target.position - transform.position).normalized;
-        direction = new Vector2(directionToTarget.x, directionToTarget.z);
+        Vector2 directionToTarget = (target.position - transform.position).normalized;
+        direction = new Vector2(directionToTarget.x, directionToTarget.y);
         //direction = new Vector2(agent.transform.forward.x, agent.transform.forward.z);
 
         //Debug.Log(direction);
@@ -80,12 +85,14 @@ public class EnemyAI : MonoBehaviour
         {
             case EnemyState.IDLE: Update_Idle(); break;
             case EnemyState.CHASE: Update_Chase(); break;
-            case EnemyState.ATTACK: Update_Attack(); break;
-            case EnemyState.PATROL: Update_Patrol(); break;
-            case EnemyState.DAMAGE: Update_Damage(); break;
-            case EnemyState.DEAD: Update_Death(); break;
+            //case EnemyState.ATTACK: Update_Attack(); break;
+            //case EnemyState.PATROL: Update_Patrol(); break;
+            //case EnemyState.DAMAGE: Update_Damage(); break;
+            //case EnemyState.DEAD: Update_Death(); break;
             default: break;
         }
+        Debug.Log($"Raw Direction: {(target.position - transform.position).normalized}");
+        Debug.Log($"2D Direction: {direction}");
     }
 
 
@@ -118,34 +125,12 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void Update_Attack()
-    {
-        transform.LookAt(target);
-        agent.velocity = Vector3.zero;
-        //anim.SetDirection(direction);
-        if (!isCoroutineRunning)
-        {
-            StartCoroutine(InflictDamage());
-        }
-        if (distanceToTarget > attackRange)
-        {
-            SetState(EnemyState.CHASE);
-        }
-    }
 
     void Update_Patrol()
     {
         //FUTURE IMPLEMENTATION
     }
 
-    void Update_Damage()
-    {
-        if (!isCoroutineRunning)
-        {
-            anim.SetDirection(direction);    //update the animation
-            StartCoroutine(TakingDamage());
-        }
-    }
 
     public void Enter_Death()
     {
@@ -178,20 +163,6 @@ public class EnemyAI : MonoBehaviour
         SetState(EnemyState.CHASE);
     }
 
-
-    IEnumerator InflictDamage()
-    {
-        isCoroutineRunning = true;
-        yield return new WaitForSeconds(attackSpeed); //wait until the last frame of animation 
-        //enemySound.PlayOneShot(attackSound);
-        if (distanceToTarget <= attackRange)
-        {        //re-check if the player is still on attack range
-
-            //player.Health -= enemyDamage;
-        }
-        isCoroutineRunning = false;
-    }
-
     IEnumerator MoveSound()
     {
         isCoroutineRunning = true;
@@ -202,21 +173,6 @@ public class EnemyAI : MonoBehaviour
 
     /////////////// END OF COROUTINES ////////////////
 
-
-    //Health Listener
-    private void UpdateHealth()
-    {
-        if (health <= 0)
-        {
-            SetState(EnemyState.DEAD);
-            Enter_Death();
-
-        }
-        else
-        {
-            SetState(EnemyState.DAMAGE);
-        }
-    }
 
 
     // Getters and setters
