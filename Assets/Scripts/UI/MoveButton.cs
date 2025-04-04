@@ -6,10 +6,10 @@ public class MoveButton : MonoBehaviour
     [SerializeField] private Text moveNameText;
     [SerializeField] private Text valorCostText;
 
-    public void Initialize(MoveBase move)
+    public void Initialize(ActionCommandBase move)
     {
-        moveNameText.text = move.Name;
-        valorCostText.text = move.ValorCost.ToString();
-        GetComponent<Button>().onClick.AddListener(() => BattleManager.Instance.SelectMove(move));
+        moveNameText.text = move.name;
+        valorCostText.text = move.name;
+        //GetComponent<Button>().onClick.AddListener(() => BattleManager.Instance.SelectMove(move));
     }
 }

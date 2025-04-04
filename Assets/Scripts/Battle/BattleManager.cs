@@ -56,7 +56,7 @@ public class BattleManager : MonoBehaviour
         StateStack.Update();
     }
 
-    internal void SelectMove(MoveBase move)
+    internal void SelectMove()//move should be here
     {
         throw new NotImplementedException();
     }
@@ -74,8 +74,8 @@ public class BattleManager : MonoBehaviour
     //instanciate the actors objects (player + enemies) in the right place
     void SetActors() {
         //to be implemented
-        Instantiate(AllActors[0],playerSide1);
+        //Instantiate(AllActors[0],playerSide1);
 
-        Instantiate(AllActors[1], enemySide1);
+        //Instantiate(AllActors[1], enemySide1);
     }
 }

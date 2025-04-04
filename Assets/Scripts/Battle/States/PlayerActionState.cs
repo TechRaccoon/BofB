@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerActionState : BattleState
 {
     private BattleActor player;
-    private MoveBase selectedMove;
+    private ActionCommandBase selectedMove;
 
     
     public PlayerActionState(BattleActor actor) {
@@ -32,12 +32,12 @@ public class PlayerActionState : BattleState
             OnMoveSelected(UIManager.Instance.GetSelectedMove());
     }
 
-    private void OnMoveSelected(MoveBase move)
+    private void OnMoveSelected(ActionCommandBase move)
     {
         // 4. Store selection and transition
         selectedMove = move;
         BattleManager.Instance.StateStack.PopState(); // Remove this state
-        BattleManager.Instance.StateStack.PushState(new TargetSelectionState(selectedMove));
+        //BattleManager.Instance.StateStack.PushState(new TargetSelectionState(selectedMove));
     }
 
     public override void Exit()

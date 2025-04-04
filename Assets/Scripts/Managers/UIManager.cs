@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    internal MoveBase GetSelectedMove()
+    internal ActionCommandBase GetSelectedMove()
     {
         throw new NotImplementedException();
     }
@@ -65,18 +65,18 @@ public class UIManager : MonoBehaviour
     }
 
     // Show action menu with player's available moves
-    public void ShowActionMenu(List<MoveBase> moves)
+    public void ShowActionMenu(List<ActionCommandBase> moves)
     {
         actionMenuPanel.SetActive(true);
         selectedIndex = 0;
         ClearMoveButtons();
         actionButtons.Clear();
 
-        foreach (MoveBase move in moves)
+        foreach (ActionCommandBase move in moves)
         {
             GameObject buttonObj = Instantiate(moveButtonPrefab, moveButtonsParent);
             MoveButton moveButton = buttonObj.GetComponent<MoveButton>();
-            moveButton.Initialize(move);
+            //moveButton.Initialize(move);
             actionButtons.Add(buttonObj.GetComponent<Button>());
         }
 

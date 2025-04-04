@@ -16,6 +16,6 @@ public class BattleActor : MonoBehaviour
     public int currentVP;
 
     // Character Move list 
-    public List<MoveBase> AvailableMoves;
+    public List<ActionCommandBase> AvailableMoves;
 
 }

@@ -9,7 +9,7 @@ public class EnemyAnim : MonoBehaviour
 {
     [SerializeField] Animator anim;
     [SerializeField] EnemyAI state;
-    [SerializeField] bool hasDamageAnim = false;
+    
 
     public string[] idleDirection = { "IDLE_NW", "IDLE_SW", "IDLE_SE", "IDLE_NE" };
     public string[] runDirection = { "RUNNING_SE", "RUNNING_NE", "RUNNING_NW", "RUNNING_SW" };

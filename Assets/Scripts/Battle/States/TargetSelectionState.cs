@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TargetSelectionState : BattleState
 {
-    private MoveBase selectedMove;
+    private ActionCommandBase selectedMove;
 
-    public TargetSelectionState(MoveBase selectedMove)
+    public TargetSelectionState(ActionCommandBase selectedMove)
     {
         this.selectedMove = selectedMove;
     }

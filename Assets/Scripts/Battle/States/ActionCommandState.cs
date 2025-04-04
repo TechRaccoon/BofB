@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ActionCommandState : BattleState
 {
-    private MoveBase _move;       // The move being executed
+    private ActionCommandBase _move;       // The move being executed
     private BattleActor _user;    // Who is using the move (e.g., player)
     private BattleActor _target;  // The target (e.g., enemy)
     private Coroutine _inputRoutine;
 
-    public ActionCommandState(MoveBase move, BattleActor user, BattleActor target)
+    public ActionCommandState(ActionCommandBase move, BattleActor user, BattleActor target)
     {
         _move = move;
         _user = user;
@@ -19,7 +19,7 @@ public class ActionCommandState : BattleState
     public override void Enter()
     {
         // Show UI prompt (e.g., "Press SPACE NOW!")
-        UIManager.Instance.ShowActionCommand(_move.actionCommand);
+        //UIManager.Instance.ShowActionCommand(_move.actionCommand);
 
         // Start listening for input
         _inputRoutine = BattleManager.Instance.StartCoroutine(WaitForInput());
@@ -46,11 +46,11 @@ public class ActionCommandState : BattleState
         // Notify the move of success/failure
         if (success)
         {
-            _move.OnActionCommandSuccess(_user, _target);
+            //_move.OnActionCommandSuccess(_user, _target);
         }
         else
         {
-            _move.OnActionCommandFail(_user, _target);
+            //_move.OnActionCommandFail(_user, _target);
         }
 
         // Pop this state to return to the previous logic (e.g., resolving the move)
