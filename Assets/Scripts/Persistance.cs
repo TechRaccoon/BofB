@@ -14,6 +14,9 @@ public class Persistance : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
         }
+        else {
+            Destroy(gameObject);
+        }
     }
     
 

@@ -20,6 +20,6 @@ public class SceneLoader: MonoBehaviour
 
     public static void LoadBattle()
     {
-    SceneManager.LoadScene("CombatScene");
+        SceneManager.LoadScene("CombatScene");
     }
 }

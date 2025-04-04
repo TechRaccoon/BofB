@@ -94,8 +94,9 @@ public class EnemyAI : MonoBehaviour
         {
             SetState(EnemyState.IDLE);
         }
-        else if (distanceToTarget <= attackRange && !_combatTriggered)
+        else if (distanceToTarget <= attackRange && !_combatTriggered) //COMBAT!
         {
+
             Update_BattleTrigger();
             Debug.Log("COMBAT SCENE TRIGGERED!");
             _combatTriggered = true;
