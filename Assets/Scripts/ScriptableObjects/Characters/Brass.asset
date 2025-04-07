@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d55873ce6bb04555bb2f07679fdb813, type: 3}
+  m_Name: Brass
+  m_EditorClassIdentifier: 
+  characterName: Brass
+  portrait: {fileID: -1010181638, guid: 381c02ca4dcbe0f4f888f7652fd92d1d, type: 3}
+  level: 1
+  baseHP: 0
+  baseValor: 10
+  baseAttack: 2
+  baseDefense: 0
+  animatorController: {fileID: 9100000, guid: 8d6c6c7a10c654f5e8245ed3ad25728b, type: 2}

@@ -22,6 +22,7 @@ public class CameraFade : MonoBehaviour
     {
         // Trasition listener subscription
         Jumper.OnPlayerTransition += StartFade;
+        SceneLoader.OnPlayerTransition += StartFade;
 
 
         if (startFadedOut) alpha = 1f; else alpha = 0f;
