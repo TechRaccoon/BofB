@@ -3374,7 +3374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   party: []
   brass: {fileID: 11400000, guid: 649bb5cf70ebc4847a7da71c0026cc84, type: 2}
-  jaro: {fileID: 0}
+  jaro: {fileID: 11400000, guid: 326700da03b924003bb6d94f7742c427, type: 2}
 --- !u!1 &1264337476
 GameObject:
   m_ObjectHideFlags: 0
