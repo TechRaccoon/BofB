@@ -6,9 +6,12 @@ public class PartyManager : MonoBehaviour
 {
     public static PartyManager Instance { get; private set; }
 
+    // All available characters in party
     public List<CharacterInstance> party = new List<CharacterInstance>();
 
-    //only for test purposes
+    // Battle Party 
+
+    //only for test purposes remove after
     [SerializeField] public CharacterTemplate brass;
     [SerializeField] public CharacterTemplate jaro;
 
@@ -17,18 +20,21 @@ public class PartyManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);  // Makes it persist across scenes
+            DontDestroyOnLoad(gameObject);  
         }
         else
         {
             Destroy(gameObject);
         }
 
-        //methods to try with battleManager
+    }
+    void Start() {
+        //methods to try with battleManager - delete later
         AddCharacterToParty(brass);
         AddCharacterToParty(jaro);
-
     }
+    
+
 
     // Adds a character to the party
     public void AddCharacterToParty(CharacterTemplate template)

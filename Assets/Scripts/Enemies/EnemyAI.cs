@@ -18,8 +18,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] Transform target;
 
     // Battle event
+    public ScriptableObject unit;
     public static event System.Action OnBattleTransition;
     private bool _combatTriggered = false;
+    public static event System.Action OnBattleStart; //event for populating enemy party
 
     //SFX
     //[SerializeField] AudioSource enemySound;
@@ -96,7 +98,7 @@ public class EnemyAI : MonoBehaviour
         }
         else if (distanceToTarget <= attackRange && !_combatTriggered) //COMBAT!
         {
-
+            OnBattleStart?.Invoke(); // Fill the enemy party
             Update_BattleTrigger();
             Debug.Log("COMBAT SCENE TRIGGERED!");
             _combatTriggered = true;
