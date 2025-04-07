@@ -37,6 +37,7 @@ public class BattleStack : MonoBehaviour
     // Updates the current top state (for timers or input checks).
     public void Update()
     {
+
         if (stack.Count > 0) {
 
             // Delegate Update() to the active state.

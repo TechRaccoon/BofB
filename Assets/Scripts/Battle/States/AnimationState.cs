@@ -8,6 +8,10 @@ public class AnimationState : BattleState
     public override void Enter()
     {
         throw new System.NotImplementedException();
+        //a
+        //b
+        // call another stack: push(new state)--> exit() --> pop()
+        // d
     }
 
     public override void Exit()

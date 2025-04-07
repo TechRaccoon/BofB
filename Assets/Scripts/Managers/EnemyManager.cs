@@ -8,8 +8,7 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager Instance { get; private set; }
 
     // List of the current enemies for battle (upon encounter)
-    public List<CharacterInstance> party = new List<CharacterInstance>();
-
+    public List<ScriptableObject> party = new List<ScriptableObject>();
 
     
     void Awake() // Singleton declaration
@@ -30,14 +29,14 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         // Enemy listener subscription
-        //EnemyAI.OnBattleStart += AddCharacterToParty;
+        EnemyAI.OnBattleStart += AddCharacterToParty;
     }
 
     // Adds a characters to the party
-    public void AddCharacterToParty(CharacterTemplate template, int units)
+    public void AddCharacterToParty(ScriptableObject template, int units)
     {
         for (int i = 0; i < units; i++) {
-            CharacterInstance newChar = new CharacterInstance(template);
+            ScriptableObject newChar = template;
             party.Add(newChar);
         }
         
@@ -48,6 +47,8 @@ public class EnemyManager : MonoBehaviour
     {
         party.Clear();
     }
+
+
 
 
 }
