@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyPartyManager : MonoBehaviour
 {
     
-    public static EnemyManager Instance { get; private set; }
+    public static EnemyPartyManager Instance { get; private set; }
 
     // List of the current enemies for battle (upon encounter)
-    public List<ScriptableObject> party = new List<ScriptableObject>();
+    public List<EnemyInstance> party = new List<EnemyInstance>();
 
     
     void Awake() // Singleton declaration
@@ -23,26 +23,26 @@ public class EnemyManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DeleteParty();
     }
 
     private void Start()
     {
         // Enemy listener subscription
-        EnemyAI.OnBattleStart += AddCharacterToParty;
+        //EnemyAI.OnBattleStart += AddCharacterToParty;
     }
 
     // Adds a characters to the party
-    public void AddCharacterToParty(ScriptableObject template, int units)
+    // needs to be improved in the futute to include diferent types of enemies
+    public void AddCharacterToParty(EnemyInstance template, int units)
     {
         for (int i = 0; i < units; i++) {
-            ScriptableObject newChar = template;
+            EnemyInstance newChar = template;
             party.Add(newChar);
         }
-        
     }
 
     // Clears the enemy party for the next encounter
+    // Called by an event by the battle manager when the battle finishes
     public void DeleteParty()
     {
         party.Clear();

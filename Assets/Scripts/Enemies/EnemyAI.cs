@@ -18,10 +18,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] Transform target;
 
     // Battle event
-    public ScriptableObject unit;
+    public EnemyTemplate unit;
     public static event System.Action OnBattleTransition;
     private bool _combatTriggered = false;
-    public static event System.Action<ScriptableObject, int > OnBattleStart; //event for populating enemy party
+
+    //Event to instanciate enemies for the Battle in (EnemyPartyManager)
+    public static event System.Action<EnemyInstance, int > OnBattleStart; 
 
     //SFX
     //[SerializeField] AudioSource enemySound;
@@ -47,6 +49,7 @@ public class EnemyAI : MonoBehaviour
     {
         anim = GetComponentInChildren<EnemyAnim>();
         state = EnemyState.IDLE;
+        _combatTriggered = false;
     }
 
     void Update()
@@ -98,9 +101,12 @@ public class EnemyAI : MonoBehaviour
         }
         else if (distanceToTarget <= attackRange && !_combatTriggered) //COMBAT!
         {
-            OnBattleStart?.Invoke(unit, 2); // Fill the enemy party
-            Update_BattleTrigger();
-            Debug.Log("COMBAT SCENE TRIGGERED!");
+            EnemyInstance enemy = new EnemyInstance(unit); //instanciate enemy
+
+            OnBattleStart?.Invoke(enemy, 2); // Fill the enemy party
+
+            Update_BattleTrigger(); // trigger the Battle
+            
             _combatTriggered = true;
         }
         
