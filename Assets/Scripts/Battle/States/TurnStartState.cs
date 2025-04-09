@@ -15,7 +15,7 @@ public class TurnStartState : BattleState
         //instanciate the actors objects (player + enemies) in the right place
 
         //Shuffle the turn order on AllActors List
-        _turnOrder = BattleManager.Instance.AllActors.OrderBy(i => Guid.NewGuid()).ToList();
+        //_turnOrder = BattleManager.Instance.AllActors.OrderBy(i => Guid.NewGuid()).ToList();
 
         _currentActorIndex = 0;
 
