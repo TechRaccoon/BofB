@@ -3,34 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class CharacterInstance
+public class CharacterInstance : IBattleActor
 {
-    public string characterName;
-
+    public CharacterTemplate Template { get; private set; }
     public int level;
-
     public int currentHP;
-    public int maxHP;
-
     public int currentValor;
-    public int MaxValor;
-
-    public int attack;
-    public int defense;
-
     public int experience;
+
+    // Private backing field for MaxHP/Valor (to allow modification)
+    public int maxHP;
+    public int maxValor;
 
     public CharacterInstance(CharacterTemplate template)
     {
-        characterName = template.characterName;
-        level = template.level;
-        maxHP = template.baseHP;
-        currentHP = maxHP;
-        MaxValor = template.baseValor;
+        Template = template;
+        currentHP = template.baseHP;
         currentValor = MaxValor;
-        attack = template.baseAttack;
-        defense = template.baseDefense;
+        level = template.level;
         experience = 0;
+    }
+
+    // IBattleEntity implementation (reads base stats directly from Template)
+    public string CharacterName => Template.characterName;
+    public int MaxHP
+    {
+        get => maxHP;
+        set => maxHP = value;
+    }
+    public int MaxValor
+    {
+        get => maxValor;
+        set => maxValor = value;
+    }
+    public int Attack => Template.baseAttack;
+    public int Defense => Template.baseDefense;
+    public RuntimeAnimatorController Animator => Template.animatorController;
+    public bool IsDefeated
+    {
+        get => currentHP <= 0;
+        set => currentHP = value ? 0 : maxHP;
+
     }
 
     public void GainExperience(int amount)
@@ -46,8 +59,8 @@ public class CharacterInstance
     {
         level++;
         experience = 0;
-        maxHP += 1;  
-        currentHP = maxHP;
+        MaxHP += 1;  
+        currentHP = MaxHP;
     }
 
     private int GetXPForNextLevel()

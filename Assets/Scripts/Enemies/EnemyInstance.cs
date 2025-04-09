@@ -3,28 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class EnemyInstance //enemy instanciation class ONLY for battle 
+public class EnemyInstance : IBattleActor //enemy instanciation class ONLY for battle 
 {
-    public string enemyName;
-
+    public EnemyTemplate Template { get; private set; }
     public int currentHP;
-    public int maxHP;
-
     public int currentValor;
-    public int MaxValor;
+ 
+    public int maxHP;
+    public int maxValor;
 
-    public int attack;
-    public int defense;
+    public RuntimeAnimatorController animator;
 
     public EnemyInstance(EnemyTemplate template)
     {
-        // Setting up the stats for battle 
-        enemyName = template.EnemyName;
-        maxHP = template.baseHP;
+        Template = template;
         currentHP = maxHP;
-        MaxValor = template.baseValor;
         currentValor = MaxValor;
-        attack = template.baseAttack;
-        defense = template.baseDefense;
+    }
+
+    // IBattleEntity implementation (reads base stats directly from Template)
+    public string CharacterName => Template.EnemyName;
+    public int MaxHP { get => maxHP; set => throw new System.NotImplementedException(); }
+    public int MaxValor { get => maxValor; set => throw new System.NotImplementedException(); }
+    public int Attack => Template.baseAttack;
+    public int Defense => Template.baseDefense;
+    public RuntimeAnimatorController Animator => Template.animatorController;
+    public bool IsDefeated
+    {
+        get => currentHP <= 0;
+        set => currentHP = value ? 0 : maxHP;
+
     }
 }

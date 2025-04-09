@@ -11,7 +11,7 @@ public class PartyManager : MonoBehaviour
 
     // Battle Party 
 
-    //only for test purposes remove after
+    // Only for test purposes remove after
     [SerializeField] public CharacterTemplate brass;
     [SerializeField] public CharacterTemplate jaro;
 
@@ -28,8 +28,9 @@ public class PartyManager : MonoBehaviour
         }
 
     }
-    void Start() {
-        //methods to try with battleManager - delete later
+    void Start()
+    {
+        // Methods to try with battleManager - delete later
         AddCharacterToParty(brass);
         AddCharacterToParty(jaro);
     }

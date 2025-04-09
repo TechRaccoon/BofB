@@ -11,10 +11,12 @@ public class BattleManager : MonoBehaviour
     // Stores the stack of the battle states (turns) 
     public BattleStack StateStack { get; private set; }
 
-    // Contains all actors in battle
-    public List<BattleActor> AllActors = new List<BattleActor>();
+    //
 
-    //variable to hold the transform of the battle positions
+    // Contains all actors in battle
+    public List<IBattleActor> AllActors = new List<IBattleActor>();
+
+    //variable to hold the position of the actors
     public Vector3[] playerSide = { new Vector3 { x = (float)-1.84, y = 0, z = 0 } };
     public Vector3[] enemySide = { new Vector3{ x = (float)1.96, y = 0, z = 0 } };
 
@@ -39,7 +41,7 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         // Find all BattleActors in the scene (players + enemies)
-        AllActors.AddRange(FindObjectsOfType<BattleActor>());
+        
 
         //place actors in the scene
         SetActors();

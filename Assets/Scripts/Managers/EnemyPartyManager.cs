@@ -16,13 +16,11 @@ public class EnemyPartyManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-
     }
 
     private void Start()
@@ -46,6 +44,7 @@ public class EnemyPartyManager : MonoBehaviour
     public void DeleteParty()
     {
         party.Clear();
+        //we need to destroy the instanciations too
     }
 
 
