@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleStack : MonoBehaviour
+public class BattleStack 
 {
     // Stores the stack of active states
     private Stack<BattleState> stack = new Stack<BattleState>();

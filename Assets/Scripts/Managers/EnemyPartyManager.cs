@@ -16,7 +16,7 @@ public class EnemyPartyManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -28,7 +28,7 @@ public class EnemyPartyManager : MonoBehaviour
     private void Start()
     {
         // Enemy listener subscription
-        //EnemyAI.OnBattleStart += AddCharacterToParty;
+        EnemyAI.OnBattleStart += AddCharacterToParty;
     }
 
     // Adds a characters to the party
