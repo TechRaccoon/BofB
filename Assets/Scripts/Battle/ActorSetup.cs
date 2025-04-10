@@ -18,6 +18,7 @@ public class ActorSetUp : MonoBehaviour
     {
         // Set animator controller
         GetComponent<Animator>().runtimeAnimatorController = Data.Animator;
+        //GetComponent<SpriteRenderer>().
         GetComponent<Animator>().Play("IDLE_SE");
     }
 

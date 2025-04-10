@@ -158,11 +158,11 @@ public class UIManager : MonoBehaviour
         // Notify battle system
         if (success)
         {
-            BattleManager.Instance.OnActionCommandSuccess();
+            //BattleManager.Instance.OnActionCommandSuccess();
         }
         else
         {
-            BattleManager.Instance.OnActionCommandFail();
+            //BattleManager.Instance.OnActionCommandFail();
         }
 
         ClearCurrentCommandUI();

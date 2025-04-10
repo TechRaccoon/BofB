@@ -708,7 +708,7 @@ Transform:
   m_GameObject: {fileID: 384639075}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.35, y: -0.71, z: 6.18}
+  m_LocalPosition: {x: 1.35, y: -0.71, z: 5.164}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1469,7 +1469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &888127091
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1531,7 +1531,7 @@ Transform:
   m_GameObject: {fileID: 888127090}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.84, y: -0.72, z: 5.61}
+  m_LocalPosition: {x: -2.53, y: -0.72, z: 4.385}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2254,7 +2254,7 @@ Transform:
   m_GameObject: {fileID: 1521920713}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.01, y: -0.71, z: 5.56}
+  m_LocalPosition: {x: 2.01, y: -0.71, z: 4.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2495,7 +2495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1587622761
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2557,7 +2557,7 @@ Transform:
   m_GameObject: {fileID: 1587622760}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: -0.71, z: 6.06}
+  m_LocalPosition: {x: -1.787, y: -0.71, z: 4.741}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2641,13 +2641,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f9627a77a9d4964aca7e94560cb7b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllActors: []
+  ActorPrefab: {fileID: 6796253182011196903, guid: 287348e4015d74cdb87e0b8e19e72745, type: 3}
+  party: {fileID: 0}
+  enemyParty: {fileID: 0}
   playerSide:
   - {x: -1.84, y: 0, z: 0}
   enemySide:
   - {x: 1.96, y: 0.425, z: 0}
-  playerSide1: {fileID: 0}
-  enemySide1: {fileID: 0}
 --- !u!4 &1710755142
 Transform:
   m_ObjectHideFlags: 0

@@ -8,23 +8,33 @@ public class BattleManager : MonoBehaviour
     // Singleton declartion
     public static BattleManager Instance { get; private set; }
 
+    // Stores the reference to the battleActor prefab
+    [SerializeField]public GameObject ActorPrefab;
+
     // Stores the stack of the battle states (turns) 
     public BattleStack StateStack { get; private set; }
 
-    //
+    //Stores both parties
+    public PartyManager party;
+    public EnemyPartyManager enemyParty;
 
     // Contains all actors in battle
     public List<IBattleActor> AllActors = new List<IBattleActor>();
 
-    //variable to hold the position of the actors
-    public Vector3[] playerSide = { new Vector3 { x = (float)-1.84, y = 0, z = 0 } };
-    public Vector3[] enemySide = { new Vector3{ x = (float)1.96, y = 0, z = 0 } };
+    // Arrays to hold the position of the actors
+    private Vector3[] playerSide = {
+    new Vector3(-1.787f, -0.71f, 4.741f), // POS 1
+    new Vector3(-2.53f, -0.72f, 4.385f)    // POS 2
+};
 
-    public Transform playerSide1;
-    public Transform enemySide1;
+    private Vector3[] enemySide = {
+        new Vector3{ x = (float)2.01, y = (float)-0.71, z = (float)4.38 }, //POS 1 
+        new Vector3{ x = (float)1.35, y = (float)-0.71, z = (float)5.164 } //POS 2
 
-    // Upon Intanciation checks is theres no other Battlemanger Insance
-    // Instanciates a new Stack of BattleStates 
+    };
+
+
+    // Upon Intanciation checks if theres no other Battlemanger Insance
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,21 +43,29 @@ public class BattleManager : MonoBehaviour
             return;
         }
         Instance = this;
-        StateStack = new BattleStack();
+        StateStack = new BattleStack(); // Instanciates a new Stack of BattleStates 
     }
 
 
-    // Start is called before the first frame update
     void Start()
     {
-        // Find all BattleActors in the scene (players + enemies)
-        
+        // Find all Parties in the scene (players + enemies)
+        try
+        {
+            party = FindAnyObjectByType<PartyManager>();
+            enemyParty = FindAnyObjectByType<EnemyPartyManager>();
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Party not found: " + e);
+        }
 
         //place actors in the scene
-        SetActors();
+        //SetActors();
+        SetPlayerParty();
 
         // Starts the first element on the stack
-        StateStack.PushState(new TurnStartState());
+        //StateStack.PushState(new TurnStartState());
 
     }
 
@@ -58,26 +76,34 @@ public class BattleManager : MonoBehaviour
         StateStack.Update();
     }
 
-    internal void SelectMove()//move should be here
-    {
-        throw new NotImplementedException();
-    }
-
-    internal void OnActionCommandSuccess()
-    {
-        throw new NotImplementedException();
-    }
-
-    internal void OnActionCommandFail()
-    {
-        throw new NotImplementedException();
-    }
 
     //instanciate the actors objects (player + enemies) in the right place
     void SetActors() {
-        //to be implemented
-        //Instantiate(AllActors[0],playerSide1);
+        // Spawn players (using PartyManager's instances)
+        foreach (var character in PartyManager.Instance.party)
+        {
+            //GameObject playerPrefab = Instantiate(BattleActor, battlePosition);
+            //playerPrefab.GetComponent<BattleActor>().Initialize(character);
+        }
 
-        //Instantiate(AllActors[1], enemySide1);
+        // Spawn enemies (using EnemyPartyManager's instances)
+        foreach (var enemy in EnemyPartyManager.Instance.party)
+        {
+            //GameObject enemyPrefab = Instantiate(enemyPrefabTemplate, battlePosition);
+            //enemyPrefab.GetComponent<BattleActor>().Initialize(enemy);
+        }
+    }
+
+    private void SetPlayerParty()
+    {
+        for(int i = 0; i < party.party.Count -1; i++)
+        {
+            Debug.Log("now the player");
+            GameObject playerPrefab = Instantiate(ActorPrefab, playerSide[i], Quaternion.identity);
+            Debug.Log($"Spawning at: {playerSide[i]}");
+
+            playerPrefab.GetComponentInChildren<ActorSetUp>().Initialize(party.party[i]);
+        }
+
     }
 }
