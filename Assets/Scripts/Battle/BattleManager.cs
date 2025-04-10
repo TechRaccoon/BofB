@@ -23,15 +23,16 @@ public class BattleManager : MonoBehaviour
 
     // Arrays to hold the position of the actors
     private Vector3[] playerSide = {
-    new Vector3(-1.787f, -0.71f, 4.741f), // POS 1
-    new Vector3(-2.53f, -0.72f, 4.385f)    // POS 2
-};
+        new Vector3(-1.787f, -0.71f, 4.741f), // POS 1
+        new Vector3(-2.53f, -0.72f, 4.385f)    // POS 2
+    };
 
     private Vector3[] enemySide = {
-        new Vector3{ x = (float)2.01, y = (float)-0.71, z = (float)4.38 }, //POS 1 
-        new Vector3{ x = (float)1.35, y = (float)-0.71, z = (float)5.164 } //POS 2
-
+        new Vector3( 2.01f, -0.71f, 4.38f ), //POS 1 
+        new Vector3(1.35f, -0.71f, 5.164f)  //POS 2
     };
+
+    const int duo = 2; // Limit for battle party
 
 
     // Upon Intanciation checks if theres no other Battlemanger Insance
@@ -63,10 +64,11 @@ public class BattleManager : MonoBehaviour
         //place actors in the scene
         //SetActors();
         SetPlayerParty();
+        SetEnemyParty();
 
         // Starts the first element on the stack
         //StateStack.PushState(new TurnStartState());
-
+        Debug.Log("");
     }
 
     // Propagate Update() to the top state
@@ -77,33 +79,29 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    //instanciate the actors objects (player + enemies) in the right place
+    // Instanciate the actors objects (player + enemies) in the right place
     void SetActors() {
-        // Spawn players (using PartyManager's instances)
-        foreach (var character in PartyManager.Instance.party)
-        {
-            //GameObject playerPrefab = Instantiate(BattleActor, battlePosition);
-            //playerPrefab.GetComponent<BattleActor>().Initialize(character);
-        }
 
-        // Spawn enemies (using EnemyPartyManager's instances)
-        foreach (var enemy in EnemyPartyManager.Instance.party)
-        {
-            //GameObject enemyPrefab = Instantiate(enemyPrefabTemplate, battlePosition);
-            //enemyPrefab.GetComponent<BattleActor>().Initialize(enemy);
-        }
     }
 
     private void SetPlayerParty()
     {
-        for(int i = 0; i < party.party.Count -1; i++)
+        for(int i = 0; i < duo; i++)
         {
             Debug.Log("now the player");
             GameObject playerPrefab = Instantiate(ActorPrefab, playerSide[i], Quaternion.identity);
-            Debug.Log($"Spawning at: {playerSide[i]}");
-
             playerPrefab.GetComponentInChildren<ActorSetUp>().Initialize(party.party[i]);
         }
+    }
 
+    private void SetEnemyParty()
+    {
+        for (int i = 0; i < enemyParty.party.Count; i++)
+        {
+            GameObject enemyPrefab = Instantiate(ActorPrefab, enemySide[i], Quaternion.identity);
+            enemyPrefab.GetComponentInChildren<ActorSetUp>().Initialize(enemyParty.party[i]);
+            enemyPrefab.GetComponentInChildren<Animator>().Play("IDLE_SW");
+
+        }
     }
 }
