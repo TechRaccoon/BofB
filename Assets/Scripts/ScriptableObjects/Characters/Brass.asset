@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Brass
   m_EditorClassIdentifier: 
   characterName: Brass
-  portrait: {fileID: -1010181638, guid: 381c02ca4dcbe0f4f888f7652fd92d1d, type: 3}
+  portrait: {fileID: 21300000, guid: 796079760aac145a28c7eb8a38b9a6cf, type: 3}
   level: 1
   baseHP: 0
   baseValor: 10
