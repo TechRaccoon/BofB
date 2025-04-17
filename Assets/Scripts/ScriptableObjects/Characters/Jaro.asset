@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Jaro
   m_EditorClassIdentifier: 
   characterName: Jaro
-  portrait: {fileID: 21300000, guid: c15149ba365eb42dba99a437f6c9f59e, type: 3}
+  portrait: {fileID: 21300000, guid: dba5d06a5e5b94e6381c31f08bf12570, type: 3}
   level: 1
   baseHP: 10
   baseValor: 15

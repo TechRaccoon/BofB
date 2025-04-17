@@ -88,9 +88,9 @@ public class UIManager : MonoBehaviour
         //}
     }
 
-    public void SetUpPlayerHUD(CharacterInstance player )
+    public void SetUpPlayerHUD(CharacterInstance player)
     {
-        if (!duo) //if there is only one player
+        if (!duo) //if there is only one player in the party
         {
             // Instanciate HUD prefab inside the battle canvas as a child
             GameObject hud = Instantiate(playerBattleHUD, activeBattleCanvas.transform);

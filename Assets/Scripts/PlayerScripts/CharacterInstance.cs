@@ -16,11 +16,12 @@ public class CharacterInstance : IBattleActor
     public int maxHP;
     public int maxValor;
 
+    // First Insnciation of the character (On creation)
     public CharacterInstance(CharacterTemplate template)
     {
         Template = template;
         currentHP = template.baseHP;
-        currentValor = MaxValor;
+        currentValor = template.baseValor;
         level = template.level;
         experience = 0;
         portrait = template.portrait;
@@ -28,16 +29,19 @@ public class CharacterInstance : IBattleActor
 
     // IBattleEntity implementation (reads base stats directly from Template)
     public string CharacterName => Template.characterName;
+
     public int MaxHP
     {
         get => maxHP;
-        set => maxHP = value;
+        set => maxHP = Template.baseHP;
     }
+
     public int MaxValor
     {
         get => maxValor;
-        set => maxValor = value;
+        set => maxValor = Template.baseValor;
     }
+
     public int Attack => Template.baseAttack;
     public int Defense => Template.baseDefense;
     public RuntimeAnimatorController Animator => Template.animatorController;

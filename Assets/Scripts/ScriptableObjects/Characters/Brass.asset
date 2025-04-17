@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Brass
   portrait: {fileID: 21300000, guid: 796079760aac145a28c7eb8a38b9a6cf, type: 3}
   level: 1
-  baseHP: 0
+  baseHP: 15
   baseValor: 10
   baseAttack: 2
   baseDefense: 0
