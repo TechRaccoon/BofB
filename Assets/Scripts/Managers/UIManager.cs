@@ -1,23 +1,25 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using System.Collections;
-using System;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
     [Header("UI References")]
-    public GameObject actionMenuPanel;    // Action selection menu
+    public GameObject battleCanvas;
+    //public GameObject actionMenuPanel;    // Action selection menu
     public GameObject targetPanel;        // Target selection panel
     public RectTransform moveButtonsParent; // Container for move buttons
     public Transform commandUIContainer;  // Parent for action command UI
 
 
     [Header("Prefabs")]
-    public GameObject moveButtonPrefab;   // Move selection button prefab
+    public GameObject playerBattleHUD;
     public GameObject defaultCommandPrompt; // Default "Press SPACE" prompt
+
 
     [Header("Navigation")]
     public Color selectedColor = Color.yellow;
@@ -29,6 +31,20 @@ public class UIManager : MonoBehaviour
     private float lastNavTime;
     private GameObject currentCommandUI;  // Currently active command UI
 
+    private GameObject activeBattleCanvas; // Reference to instaciated BattleCanvas
+
+    private Vector3 canvasLocation = new Vector3(577.5f, 180, 0);
+    private bool duo = false;
+
+    private Vector2[] hudOnePos = {
+        new Vector2(38.06149f, 200.0064f),   // OffsetMin
+        new Vector2(-706.8615f, -92.00639f)  // OffserMax 
+    };
+
+    private Vector2[] hudTwoPos = {
+        new Vector2(51, 137),  // OffsetMin
+        new Vector2(-693, -154)    // OffserMax
+    };
 
     internal void SelectFirstMoveButton()
     {
@@ -51,33 +67,81 @@ public class UIManager : MonoBehaviour
         if (Instance == null) Instance = this;
     }
 
+    private void Start()
+    {
+        // Intanciate the Battle Canvas
+        activeBattleCanvas = Instantiate(battleCanvas);
+
+        
+    }
+
     void Update()
     {
-        if (actionMenuPanel.activeSelf)
-        {
-            HandleMenuNavigation();
-        }
+        //if (actionMenuPanel.activeSelf)
+        //{
+        //    HandleMenuNavigation();
+        //}
 
-        if (currentCommandUI != null)
+        //if (currentCommandUI != null)
+        //{
+        //    HandleActionCommandInput();
+        //}
+    }
+
+    public void SetUpPlayerHUD(CharacterInstance player )
+    {
+        if (!duo) //if there is only one player
         {
-            HandleActionCommandInput();
+            // Instanciate HUD prefab inside the battle canvas as a child
+            GameObject hud = Instantiate(playerBattleHUD, activeBattleCanvas.transform);
+
+            // Set the rectTranform
+            setRectTransform(hud, hudOnePos);
+
+            // Initialize the values of the HUB based on player data
+            hud.GetComponent<PlayerBattleHUD>().Initialize(player);
+
+            // Set the duo condition to true in case there is a secon player
+            duo = true;
         }
+        else // else if this is second Player
+        {
+            // Instanciate HUD prefab inside the battle canvas as a child
+            GameObject hud = Instantiate(playerBattleHUD, activeBattleCanvas.transform);
+
+            // Set the rectTranform
+            setRectTransform(hud, hudTwoPos);
+
+            // Initialize the values of the HUB based on second player data
+            hud.GetComponent<PlayerBattleHUD>().Initialize(player);
+
+            // Reset the values of the duo condition for next battle 
+            duo = false;
+        }
+        
+    }
+
+    private void setRectTransform(GameObject hud, Vector2[] pos)
+    {
+        hud.transform.SetParent(activeBattleCanvas.transform, false);
+        hud.GetComponent<RectTransform>().offsetMin = pos[0]; // new Vector2(left, bottom);
+        hud.GetComponent<RectTransform>().offsetMax = pos[1]; // new Vector2(-right, -top);
     }
 
     // Show action menu with player's available moves
     public void ShowActionMenu(List<ActionCommandBase> moves)
     {
-        actionMenuPanel.SetActive(true);
+        //actionMenuPanel.SetActive(true);
         selectedIndex = 0;
         ClearMoveButtons();
         actionButtons.Clear();
 
         foreach (ActionCommandBase move in moves)
         {
-            GameObject buttonObj = Instantiate(moveButtonPrefab, moveButtonsParent);
-            MoveButton moveButton = buttonObj.GetComponent<MoveButton>();
+            //GameObject buttonObj = Instantiate(moveButtonPrefab, moveButtonsParent);
+            //MoveButton moveButton = buttonObj.GetComponent<MoveButton>();
             //moveButton.Initialize(move);
-            actionButtons.Add(buttonObj.GetComponent<Button>());
+            //actionButtons.Add(buttonObj.GetComponent<Button>());
         }
 
         UpdateButtonColors();
@@ -113,7 +177,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void HideActionMenu() => actionMenuPanel.SetActive(false);
+    //public void HideActionMenu() => actionMenuPanel.SetActive(false);
 
     // Show target selection UI
     public void ShowTargetPanel() => targetPanel.SetActive(true);

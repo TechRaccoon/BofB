@@ -62,9 +62,8 @@ public class BattleManager : MonoBehaviour
         }
 
         //place actors in the scene
-        //SetActors();
-        SetPlayerParty();
-        SetEnemyParty();
+        SetActors();
+        
 
         // Starts the first element on the stack
         //StateStack.PushState(new TurnStartState());
@@ -81,19 +80,28 @@ public class BattleManager : MonoBehaviour
 
     // Instanciate the actors objects (player + enemies) in the right place
     void SetActors() {
-
+        SetPlayerParty();
+        SetEnemyParty();
     }
 
+    // Instanciate the duo battle party
     private void SetPlayerParty()
     {
         for(int i = 0; i < duo; i++)
         {
-            Debug.Log("now the player");
+            // Instanciating player prefab on the right location 
             GameObject playerPrefab = Instantiate(ActorPrefab, playerSide[i], Quaternion.identity);
+
+            // Initialize the prefab with the player data
             playerPrefab.GetComponentInChildren<ActorSetUp>().Initialize(party.party[i]);
+
+            // Instanciate the battle HUD for the player with the player data
+            UIManager.Instance.SetUpPlayerHUD(party.party[i]);
+
         }
     }
 
+    //Instanciate the enemy party
     private void SetEnemyParty()
     {
         for (int i = 0; i < enemyParty.party.Count; i++)
@@ -104,4 +112,7 @@ public class BattleManager : MonoBehaviour
 
         }
     }
+
+    
+
 }

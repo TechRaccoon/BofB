@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 6917215680831271194}
   - component: {fileID: 3079880418778463124}
   - component: {fileID: 8049813330361380638}
+  - component: {fileID: 7455162523908013195}
   m_Layer: 5
   m_Name: PlayerBattleHud
   m_TagString: Untagged
@@ -155,6 +156,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7455162523908013195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872730307498524759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28801cb4eec834741b6a5d5b00932521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: {fileID: 2992035444862267829}
+  portrait: {fileID: 6874268316177950532}
+  health: {fileID: 750581443958501435}
+  valor: {fileID: 6866423846015173919}
 --- !u!1 &1877332575603552584
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class CharacterInstance : IBattleActor
     public int currentHP;
     public int currentValor;
     public int experience;
+    public Sprite portrait;
 
     // Private backing field for MaxHP/Valor (to allow modification)
     public int maxHP;
@@ -22,6 +23,7 @@ public class CharacterInstance : IBattleActor
         currentValor = MaxValor;
         level = template.level;
         experience = 0;
+        portrait = template.portrait;
     }
 
     // IBattleEntity implementation (reads base stats directly from Template)
@@ -39,6 +41,7 @@ public class CharacterInstance : IBattleActor
     public int Attack => Template.baseAttack;
     public int Defense => Template.baseDefense;
     public RuntimeAnimatorController Animator => Template.animatorController;
+
     public bool IsDefeated
     {
         get => currentHP <= 0;
@@ -67,5 +70,9 @@ public class CharacterInstance : IBattleActor
     {
         return level * 10; // Just a placeholder formula
     }
+
+    private void TakeDamage() { }
+
+    private void Healed() { }
 }
 

@@ -43,6 +43,6 @@ public class PlayerActionState : BattleState
     public override void Exit()
     {
         // 5. Clean up UI
-        UIManager.Instance.HideActionMenu();
+        //UIManager.Instance.HideActionMenu();
     }
 }
