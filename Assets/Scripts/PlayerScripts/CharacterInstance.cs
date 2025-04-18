@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,11 @@ public class CharacterInstance : IBattleActor
     public int maxHP;
     public int maxValor;
 
+    // Event for the HUD listener
+    public event Action<int> OnHealthChanged;
+    public event Action<int> OnValorChanged;
+    public event Action OnCharacterDeath;
+
     // First Insnciation of the character (On creation)
     public CharacterInstance(CharacterTemplate template)
     {
@@ -25,6 +31,8 @@ public class CharacterInstance : IBattleActor
         level = template.level;
         experience = 0;
         portrait = template.portrait;
+        maxHP = template.baseHP;
+        maxValor = template.baseValor;
     }
 
     // IBattleEntity implementation (reads base stats directly from Template)
@@ -33,13 +41,13 @@ public class CharacterInstance : IBattleActor
     public int MaxHP
     {
         get => maxHP;
-        set => maxHP = Template.baseHP;
+        set => maxHP = currentHP;
     }
 
     public int MaxValor
     {
         get => maxValor;
-        set => maxValor = Template.baseValor;
+        set => maxValor = currentValor;
     }
 
     public int Attack => Template.baseAttack;
@@ -50,7 +58,6 @@ public class CharacterInstance : IBattleActor
     {
         get => currentHP <= 0;
         set => currentHP = value ? 0 : maxHP;
-
     }
 
     public void GainExperience(int amount)
@@ -66,7 +73,7 @@ public class CharacterInstance : IBattleActor
     {
         level++;
         experience = 0;
-        MaxHP += 1;  
+        MaxHP += 1;
         currentHP = MaxHP;
     }
 
@@ -75,8 +82,30 @@ public class CharacterInstance : IBattleActor
         return level * 10; // Just a placeholder formula
     }
 
-    private void TakeDamage() { }
+    public void TakeDamage(int damage)
+    {
+        currentHP -= damage;
+        OnHealthChanged?.Invoke(currentHP);
+    }
 
-    private void Healed() { }
+    public void SpendValor(int cost)
+    {
+        currentValor -= cost;
+        OnValorChanged?.Invoke(currentValor);
+    }
+
+    public void Healed(int heal)
+    {
+        currentHP += heal;
+        if (currentHP > maxHP) currentHP = maxHP;
+        OnHealthChanged?.Invoke(currentHP);
+    }
+
+    public void RestoreValor(int restore)
+    {
+        currentValor += restore;
+        if (currentValor > maxValor) currentValor = maxValor;
+        OnValorChanged?.Invoke(currentValor);
+    }
 }
 

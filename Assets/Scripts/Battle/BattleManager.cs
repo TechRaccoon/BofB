@@ -68,6 +68,8 @@ public class BattleManager : MonoBehaviour
         // Starts the first element on the stack
         //StateStack.PushState(new TurnStartState());
         Debug.Log("");
+
+        StartCoroutine(testHealthChanges());
     }
 
     // Propagate Update() to the top state
@@ -111,6 +113,12 @@ public class BattleManager : MonoBehaviour
             enemyPrefab.GetComponentInChildren<Animator>().Play("IDLE_SW");
 
         }
+    }
+
+    IEnumerator testHealthChanges()
+    {
+        yield return new WaitForSeconds(3);
+        party.party[0].TakeDamage(5);
     }
 
     

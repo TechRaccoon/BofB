@@ -16,7 +16,7 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: dba5d06a5e5b94e6381c31f08bf12570, type: 3}
   level: 1
   baseHP: 10
-  baseValor: 15
+  baseValor: 20
   baseAttack: 2
   baseDefense: 0
   animatorController: {fileID: 9100000, guid: f79550961c7324d7db3a64c410a820e7, type: 2}
