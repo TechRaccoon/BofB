@@ -40,19 +40,22 @@ public class BattleManager : MonoBehaviour
     {
         SetUpParties(); // Find all Parties in the scene (players + enemies)
 
+        // Initializes the AllActors list
+        ListedActors();
 
-        StateStack.PushState(new SetUpState());
+        StateStack.PushState(new SetUpState()); //Push the SetUp Satate
 
     }
 
     
     void Update() 
     {
-        StateStack.Update(); // Propagate Update() to the top battle state
+        StateStack.Update(); // Propagates Update() to the top battle state
     }
 
 
-    private void SetUpParties() { // Find all Parties in the scene (players + enemies)
+    private void SetUpParties()
+    { // Find all Parties in the scene (players + enemies)
         try
         {
             party = FindAnyObjectByType<PartyManager>();
@@ -62,6 +65,20 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Party not found: " + e);
         }
+    }
+
+    private void ListedActors()
+    {
+        foreach(IBattleActor player in party.party)
+        {
+            AllActors.Add(player);
+        }
+
+        foreach (IBattleActor enemy in enemyParty.party)
+        {
+            AllActors.Add(enemy);
+        }
+        //Debug.Log(AllActors.Count);
     }
 
     ///////////////// E X P E R I M E N T S ////////////////////////////

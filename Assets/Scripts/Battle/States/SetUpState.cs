@@ -20,17 +20,19 @@ public class SetUpState : BattleState
 
     public override void Enter()
     {
-        manager = BattleManager.Instance;
+        manager = BattleManager.Instance; // For readability
 
         SetUpPlayerParty(); // Set up the player Party
 
         SetEnemyParty();    //Set up the enemy party
 
+        manager.StateStack.PushState(new TurnStartState());
+
     }
 
     public override void Exit()
     {
-        
+        // no cleaning so far 
     }
 
     public void SetUpPlayerParty()
@@ -45,6 +47,8 @@ public class SetUpState : BattleState
 
             // Instanciate the battle HUD for the player with the player data
             UIManager.Instance.SetUpPlayerHUD(manager.party.party[i]);
+
+            manager.AllActors.Add(manager.party.party[i]);
         }
     }
 
