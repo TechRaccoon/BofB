@@ -15,7 +15,7 @@ public abstract class ActionCommandBase : ScriptableObject
     public UnityEvent onFailure;
 
     // Called when the command starts
-    public virtual void StartCommand(BattleActor user, BattleActor target) { }
+    public virtual void StartCommand(IBattleActor user, IBattleActor target) { }
 
     // Called every frame during the command
     public virtual void UpdateCommand() { }

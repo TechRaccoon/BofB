@@ -38,11 +38,11 @@ public class UIManager : MonoBehaviour
 
     private Vector2[] hudOnePos = {
         new Vector2(38.06149f, 200.0064f),   // OffsetMin
-        new Vector2(-706.8615f, -92.00639f)  // OffserMax 
+        new Vector2(-706.8615f, -92.00639f)  // OffsetMax 
     };
 
     private Vector2[] hudTwoPos = {
-        new Vector2(51, 137),  // OffsetMin
+        new Vector2(51, 137),      // OffsetMin
         new Vector2(-693, -154)    // OffserMax
     };
 

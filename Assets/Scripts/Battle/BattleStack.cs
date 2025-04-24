@@ -9,8 +9,6 @@ public class BattleStack
 
     // Adds a new state to the top of the stack and runs it.
     public void PushState(BattleState state) {
-        // Pause the current state (if any) by calling Exit().
-        if (stack.Count > 0) stack.Peek().Exit();
 
         // Add the new state to the stack.
         stack.Push(state);
@@ -21,17 +19,13 @@ public class BattleStack
 
     // Removes the top state from the stack.
     public void PopState() {
-        if(stack.Count > 0)
-        {
-            // Get the top state and remove it.
-            BattleState oldstate = stack.Pop();
+        if (stack.Count == 0) return;
 
-            // Clean up the old state by calling Exit().
-            oldstate.Exit();
-        }
+        // Clean up the old state by calling Exit().
+        stack.Peek().Exit();
 
-        // Resume the previous state (if any) by calling Enter().
-        if (stack.Count > 0) stack.Peek().Enter();
+        // Get the top state and remove it.
+        stack.Pop();
     }
 
     // Updates the current top state (for timers or input checks).

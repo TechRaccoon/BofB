@@ -3090,7 +3090,7 @@ GameObject:
   - component: {fileID: 2125379532}
   - component: {fileID: 2125379531}
   m_Layer: 0
-  m_Name: Experient_light
+  m_Name: Experiment_light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

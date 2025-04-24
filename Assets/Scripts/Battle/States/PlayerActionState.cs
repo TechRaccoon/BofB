@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class PlayerActionState : BattleState
 {
-    private BattleActor player;
+    private IBattleActor player;
     private ActionCommandBase selectedMove;
 
     
-    public PlayerActionState(BattleActor actor) {
+    public PlayerActionState(IBattleActor actor) {
         player = actor;
     }
 
     public override void Enter()
     {
         // 1. Show action menu with player's moves
-        UIManager.Instance.ShowActionMenu(player.AvailableMoves);
+        //UIManager.Instance.ShowActionMenu(player.AvailableMoves);
 
         // 2. Initialize selection
         UIManager.Instance.SelectFirstMoveButton();

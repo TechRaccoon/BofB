@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemyActionState : BattleState
 {
-    public BattleActor enemy;
+    public IBattleActor enemy;
 
-    public EnemyActionState(BattleActor actor) {
+    public EnemyActionState(IBattleActor actor) {
         enemy = actor;
     }
 

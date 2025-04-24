@@ -6,7 +6,7 @@ using System;
 
 public class TurnStartState : BattleState
 {
-    private List<BattleActor> _turnOrder;
+    private List<IBattleActor> _turnOrder;
     private int _currentActorIndex;
 
 
@@ -36,25 +36,25 @@ public class TurnStartState : BattleState
 
     private void PushNextActor()
     {
-        // Check if there are more actors in the turn order
-        if (_currentActorIndex < _turnOrder.Count)
-        {
-            BattleActor nextActor = _turnOrder[_currentActorIndex];
-            _currentActorIndex++;
+        //// Check if there are more actors in the turn order
+        //if (_currentActorIndex < _turnOrder.Count)
+        //{
+        //    //BattleActor nextActor = _turnOrder[_currentActorIndex];
+        //    //_currentActorIndex++;
 
-            // Push actor's turn state onto the stack
-            BattleManager.Instance.StateStack.PushState(
-                new ActorTurnState(nextActor)
-            );
-        }
-        else
-        {
-            // All actors have acted - check win/lose condition
-            //BattleManager.Instance.StateStack.PushState(new CheckWinState());
+        //    // Push actor's turn state onto the stack
+        //    //BattleManager.Instance.StateStack.PushState(
+        //       // new ActorTurnState(nextActor)
+        //    );
+        //}
+        //else
+        //{
+        //    // All actors have acted - check win/lose condition
+        //    //BattleManager.Instance.StateStack.PushState(new CheckWinState());
 
-            // Pop this state from the stack
-            BattleManager.Instance.StateStack.PopState();
+        //    // Pop this state from the stack
+        //    BattleManager.Instance.StateStack.PopState();
 
-        }
+        //}
     }
 }

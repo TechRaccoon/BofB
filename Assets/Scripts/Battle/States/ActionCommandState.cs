@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class ActionCommandState : BattleState
 {
-    private ActionCommandBase _move;       // The move being executed
-    private BattleActor _user;    // Who is using the move (e.g., player)
-    private BattleActor _target;  // The target (e.g., enemy)
-    private Coroutine _inputRoutine;
+    //private ActionCommandBase _move;       // The move being executed
+    //private IBattleActor _user;    // Who is using the move (e.g., player)
+    //private BattleActor _target;  // The target (e.g., enemy)
+    //private Coroutine _inputRoutine;
 
-    public ActionCommandState(ActionCommandBase move, BattleActor user, BattleActor target)
+    public ActionCommandState(ActionCommandBase move, IBattleActor user, IBattleActor target)
     {
-        _move = move;
-        _user = user;
-        _target = target;
+       // _move = move;
+        //_user = user;
+        //_target = target;
     }
 
     public override void Enter()
@@ -22,7 +22,7 @@ public class ActionCommandState : BattleState
         //UIManager.Instance.ShowActionCommand(_move.actionCommand);
 
         // Start listening for input
-        _inputRoutine = BattleManager.Instance.StartCoroutine(WaitForInput());
+        //_inputRoutine = BattleManager.Instance.StartCoroutine(WaitForInput());
     }
 
     IEnumerator WaitForInput()
@@ -59,10 +59,10 @@ public class ActionCommandState : BattleState
 
     public override void Exit()
     {
-        UIManager.Instance.HideActionCommand();
-        if (_inputRoutine != null)
-        {
-            BattleManager.Instance.StopCoroutine(_inputRoutine);
-        }
+        //UIManager.Instance.HideActionCommand();
+        //if (_inputRoutine != null)
+        //{
+        //    BattleManager.Instance.StopCoroutine(_inputRoutine);
+        //}
     }
 }
