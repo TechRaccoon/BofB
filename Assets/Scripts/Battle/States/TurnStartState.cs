@@ -12,21 +12,28 @@ public class TurnStartState : BattleState
 
     public override void Enter()
     {
-        //instanciate the actors objects (player + enemies) in the right place
-
-        //Shuffle the turn order on AllActors List
-        //_turnOrder = BattleManager.Instance.AllActors.OrderBy(i => Guid.NewGuid()).ToList();
-
+        Debug.Log("In TurnStart State");
         _currentActorIndex = 0;
 
-        // Start the first actor's turn (player or enemy).
+        //Shuffle the turn order on AllActors List
+        _turnOrder = ShuffledList(BattleManager.Instance.AllActors);
+
+        // Start the first actor's turn 
         PushNextActor();
     }
 
     public override void Update()
     {
-        // Called when returning to this state after an actor’s turn
-        PushNextActor();
+        if (BattleManager.Instance.isBattleOver)
+        {
+            // Push Finish State 
+        }
+        else
+        {
+            // Called when returning to this state after an actor’s turn
+            PushNextActor();
+            Debug.Log("BACK IN TURNSTARTRSTATE UPDATE()");
+        }
     }
 
     public override void Exit()
@@ -36,25 +43,37 @@ public class TurnStartState : BattleState
 
     private void PushNextActor()
     {
-        //// Check if there are more actors in the turn order
-        //if (_currentActorIndex < _turnOrder.Count)
-        //{
-        //    //BattleActor nextActor = _turnOrder[_currentActorIndex];
-        //    //_currentActorIndex++;
+        // Check if there are more actors in the turn order
+        if (_currentActorIndex < _turnOrder.Count)
+        {
+            IBattleActor nextActor = _turnOrder[_currentActorIndex];
+            _currentActorIndex++;
 
-        //    // Push actor's turn state onto the stack
-        //    //BattleManager.Instance.StateStack.PushState(
-        //       // new ActorTurnState(nextActor)
-        //    );
-        //}
-        //else
-        //{
-        //    // All actors have acted - check win/lose condition
-        //    //BattleManager.Instance.StateStack.PushState(new CheckWinState());
+            // Push actor's turn state onto the stack
+            BattleManager.Instance.StateStack.PushState(new ActorTurnState(nextActor));
+        }
+        else
+        {
+            // Round is over, reshuffle List
+            _turnOrder = ShuffledList(BattleManager.Instance.AllActors);
 
-        //    // Pop this state from the stack
-        //    BattleManager.Instance.StateStack.PopState();
+            _currentActorIndex = 0;
 
-        //}
+        }
+    }
+
+    // Fisher-Yates Shuffle Algorithm
+    public List<IBattleActor> ShuffledList(List<IBattleActor> list)
+    {
+        for (int i = list.Count -1; i >= 0; i--)
+        {
+            int j = UnityEngine.Random.Range(0,i + 1); //non inclusive
+            IBattleActor temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+
+            Debug.Log("Current tag is: " + list[i]);
+        }
+        return list;
     }
 }

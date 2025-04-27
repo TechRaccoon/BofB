@@ -18,6 +18,8 @@ public class ActorSetUp : MonoBehaviour
     {
         // Set animator controller
         GetComponent<Animator>().runtimeAnimatorController = Data.Animator;
+
+        //Play Idke upon instanciation
         GetComponent<Animator>().Play("IDLE_SE");
     }
 

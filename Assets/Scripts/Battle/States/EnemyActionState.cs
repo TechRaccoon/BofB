@@ -6,7 +6,7 @@ public class EnemyActionState : BattleState
 {
     public IBattleActor enemy;
 
-    public EnemyActionState(IBattleActor actor) {
+    public EnemyActionState(EnemyInstance actor) {
         enemy = actor;
     }
 

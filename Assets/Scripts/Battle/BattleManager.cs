@@ -11,7 +11,7 @@ public class BattleManager : MonoBehaviour
     // Stores the reference to the battleActor prefab
     [SerializeField]public GameObject ActorPrefab;
 
-    // Stores the stack of the battle states (turns) 
+    // Stores the stack of the battle states
     public BattleStack StateStack { get; private set; }
 
     //Stores both parties
@@ -21,6 +21,8 @@ public class BattleManager : MonoBehaviour
     // Contains all actors in battle
     public List<IBattleActor> AllActors = new List<IBattleActor>();
 
+    // 
+    public bool isBattleOver;
 
     // Upon Intanciation checks if theres no other Battlemanger Insance
     void Awake()
@@ -38,10 +40,11 @@ public class BattleManager : MonoBehaviour
 
     void Start()
     {
+        isBattleOver = false; // global confirmation
+
         SetUpParties(); // Find all Parties in the scene (players + enemies)
 
-        // Initializes the AllActors list
-        ListedActors();
+        ListedActors(); // Initializes the AllActors list
 
         StateStack.PushState(new SetUpState()); //Push the SetUp Satate
 
@@ -51,6 +54,7 @@ public class BattleManager : MonoBehaviour
     void Update() 
     {
         StateStack.Update(); // Propagates Update() to the top battle state
+        //Debug.Log("BattleManager UPDATE!");
     }
 
 
@@ -66,6 +70,7 @@ public class BattleManager : MonoBehaviour
             Debug.Log("Party not found: " + e);
         }
     }
+
 
     private void ListedActors()
     {

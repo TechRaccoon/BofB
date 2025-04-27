@@ -36,6 +36,8 @@ public class BattleStack
 
             // Delegate Update() to the active state.
             stack.Peek().Update();
+
+            //Debug.Log("BattleStack UPDATE!");
         }
     }
 }

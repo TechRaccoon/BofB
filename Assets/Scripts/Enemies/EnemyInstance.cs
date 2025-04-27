@@ -8,7 +8,8 @@ public class EnemyInstance : IBattleActor //enemy instanciation class ONLY for b
     public EnemyTemplate Template { get; private set; }
     public int currentHP;
     public int currentValor;
- 
+    public bool enemy;
+
     public int maxHP;
     public int maxValor;
 
@@ -19,6 +20,7 @@ public class EnemyInstance : IBattleActor //enemy instanciation class ONLY for b
         Template = template;
         currentHP = maxHP;
         currentValor = MaxValor;
+        enemy = true;
     }
 
     // IBattleEntity implementation (reads base stats directly from Template)
@@ -28,6 +30,7 @@ public class EnemyInstance : IBattleActor //enemy instanciation class ONLY for b
     public int Attack => Template.baseAttack;
     public int Defense => Template.baseDefense;
     public RuntimeAnimatorController Animator => Template.animatorController;
+
     public bool IsDefeated
     {
         get => currentHP <= 0;

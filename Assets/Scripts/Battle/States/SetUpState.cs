@@ -20,6 +20,8 @@ public class SetUpState : BattleState
 
     public override void Enter()
     {
+        Debug.Log("In SetUp State");
+        
         manager = BattleManager.Instance; // For readability
 
         SetUpPlayerParty(); // Set up the player Party
@@ -28,11 +30,13 @@ public class SetUpState : BattleState
 
         manager.StateStack.PushState(new TurnStartState());
 
+        Debug.Log("All actors count: " + manager.AllActors.Count);
     }
 
     public override void Exit()
     {
-        // no cleaning so far 
+        // no cleaning so far
+        Debug.Log("Exiting setUp State");
     }
 
     public void SetUpPlayerParty()
@@ -47,8 +51,6 @@ public class SetUpState : BattleState
 
             // Instanciate the battle HUD for the player with the player data
             UIManager.Instance.SetUpPlayerHUD(manager.party.party[i]);
-
-            manager.AllActors.Add(manager.party.party[i]);
         }
     }
 
@@ -57,11 +59,21 @@ public class SetUpState : BattleState
     {
         for (int i = 0; i < manager.enemyParty.party.Count; i++)
         {
+            // Instanciating enemy prefab on the right location
             GameObject enemyPrefab = UnityEngine.Object.Instantiate(manager.ActorPrefab, enemySide[i], Quaternion.identity);
+
+            // Initialize the prefab with the enemy data
             enemyPrefab.GetComponentInChildren<ActorSetUp>().Initialize(manager.enemyParty.party[i]);
+
+            // Instanciate the battle HUD for the player with the player data
             enemyPrefab.GetComponentInChildren<Animator>().Play("IDLE_SW");
 
         }
+    }
+
+    public override void Update()
+    {
+        Debug.Log("IF THIS PRINTS MEANS THAT UPDATE GEST CALLED AT LEAST ONCE");
     }
 
 }

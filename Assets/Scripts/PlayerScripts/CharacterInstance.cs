@@ -12,6 +12,7 @@ public class CharacterInstance : IBattleActor
     public int currentValor;
     public int experience;
     public Sprite portrait;
+    public bool enemy;
 
     // Private backing field for MaxHP/Valor (to allow modification)
     public int maxHP;
@@ -31,6 +32,7 @@ public class CharacterInstance : IBattleActor
         level = template.level;
         experience = 0;
         portrait = template.portrait;
+        enemy = false;
         maxHP = template.baseHP;
         maxValor = template.baseValor;
     }
