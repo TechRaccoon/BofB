@@ -14,6 +14,7 @@ public class PlayerActionState : BattleState
 
     public override void Enter()
     {
+        Debug.Log("In PlayerActionState");
         // 1. Show action menu with player's moves
         //UIManager.Instance.ShowActionMenu(player.AvailableMoves);
 

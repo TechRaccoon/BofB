@@ -54,7 +54,6 @@ public class BattleManager : MonoBehaviour
     void Update() 
     {
         StateStack.Update(); // Propagates Update() to the top battle state
-        //Debug.Log("BattleManager UPDATE!");
     }
 
 
@@ -83,7 +82,6 @@ public class BattleManager : MonoBehaviour
         {
             AllActors.Add(enemy);
         }
-        //Debug.Log(AllActors.Count);
     }
 
     ///////////////// E X P E R I M E N T S ////////////////////////////

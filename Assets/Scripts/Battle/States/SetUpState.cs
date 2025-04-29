@@ -29,14 +29,12 @@ public class SetUpState : BattleState
         SetEnemyParty();    //Set up the enemy party
 
         manager.StateStack.PushState(new TurnStartState());
-
-        Debug.Log("All actors count: " + manager.AllActors.Count);
     }
 
     public override void Exit()
     {
         // no cleaning so far
-        Debug.Log("Exiting setUp State");
+        Debug.Log("Exiting SetUp State");
     }
 
     public void SetUpPlayerParty()

@@ -24,6 +24,7 @@ public class ActorTurnState : BattleState
     public override void Exit()
     {
         // Reset for reuse
+        Debug.Log("Exiting ActorTurnState");
         _hasInitialized = false;
     }
 

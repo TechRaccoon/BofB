@@ -32,12 +32,12 @@ public class TurnStartState : BattleState
         {
             // Called when returning to this state after an actor’s turn
             PushNextActor();
-            Debug.Log("BACK IN TURNSTARTRSTATE UPDATE()");
         }
     }
 
     public override void Exit()
     {
+        Debug.Log("Exiting TurnStart State");
         // No cleanup needed here for this state.
     }
 
@@ -71,8 +71,6 @@ public class TurnStartState : BattleState
             IBattleActor temp = list[i];
             list[i] = list[j];
             list[j] = temp;
-
-            Debug.Log("Current tag is: " + list[i]);
         }
         return list;
     }
